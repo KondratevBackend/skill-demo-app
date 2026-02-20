@@ -1,0 +1,41 @@
+x-logging-common: &logging-common
+  logging:
+    options:
+      max-size: "10m"
+      max-file: "3"
+services:
+  telegram-bot:
+    container_name: telegram-bot
+    build:
+      context: .
+      dockerfile: "./Dockerfile"
+    image: telegram_bot
+    command: ["bash", "-c", "python manager.py run-telegram-bot"]
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    restart: always
+  telegram-bot-db:
+    image: postgres:15
+    container_name: telegram-bot-db
+    volumes:
+      - telegram_bot_db_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - "${EXTERNAL_DB_PORT:-5434}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    restart: always
+    !!merge <<: *logging-common
+
+volumes:
+  telegram_bot_db_data:
+
+networks:
+  default:
+    name: telegram_network
