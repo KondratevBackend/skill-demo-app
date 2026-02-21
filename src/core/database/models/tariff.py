@@ -8,6 +8,7 @@ class Tariff(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     days: orm.Mapped[int] = orm.mapped_column(Integer, nullable=False)
     price: orm.Mapped[float] = orm.mapped_column(Float, nullable=False)
     limit_ip: orm.Mapped[int] = orm.mapped_column(Integer, nullable=False)
+    order_index: orm.Mapped[int] = orm.mapped_column(Integer, server_default="0", nullable=False)
 
     payments = orm.relationship(
         "Payment",

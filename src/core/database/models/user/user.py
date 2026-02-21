@@ -8,6 +8,8 @@ class User(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     user_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=False)
     first_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=True)
     last_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=True)
+    email: orm.Mapped[str] = orm.mapped_column(String(length=256), nullable=True)
+    phone: orm.Mapped[str] = orm.mapped_column(String(length=128), nullable=True)
 
     server_id: orm.Mapped[int] = orm.mapped_column(Integer, ForeignKey("server.id"), nullable=True)
 
