@@ -1,7 +1,7 @@
 import datetime
 from enum import StrEnum
 
-from sqlalchemy import orm, Float, Integer, String, Enum, ForeignKey, DateTime
+from sqlalchemy import DateTime, Enum, Float, ForeignKey, Integer, String, orm
 
 from src.core.database import Base, mixins
 from src.core.database.models.payment.provider import PaymentProviderType

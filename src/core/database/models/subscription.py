@@ -1,7 +1,7 @@
 import datetime
 from enum import StrEnum
 
-from sqlalchemy import orm, DateTime, Enum, Integer, ForeignKey
+from sqlalchemy import DateTime, Enum, ForeignKey, Integer, orm
 
 from src.core.database import Base, mixins
 

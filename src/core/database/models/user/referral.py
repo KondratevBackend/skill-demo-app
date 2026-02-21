@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-from sqlalchemy import orm, Integer, Enum, ForeignKey
+from sqlalchemy import Enum, ForeignKey, Integer, orm
 
 from src.core.database import Base, mixins
 

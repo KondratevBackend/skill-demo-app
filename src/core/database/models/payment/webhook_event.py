@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import orm, String, Enum, JSON
+from sqlalchemy import JSON, Enum, String, orm
 
 from src.core.database import Base, mixins
 from src.core.database.models.payment.provider import PaymentProviderType

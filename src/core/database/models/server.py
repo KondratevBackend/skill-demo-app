@@ -1,4 +1,4 @@
-from sqlalchemy import orm, String, Integer
+from sqlalchemy import Integer, String, orm
 
 from src.core.database import Base, mixins
 

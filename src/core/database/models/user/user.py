@@ -1,4 +1,4 @@
-from sqlalchemy import orm, BigInteger, String, Integer, ForeignKey
+from sqlalchemy import BigInteger, ForeignKey, Integer, String, orm
 
 from src.core.database import Base, mixins
 

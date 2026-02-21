@@ -1,4 +1,4 @@
-from sqlalchemy import orm, CheckConstraint, Integer, String, Boolean
+from sqlalchemy import Boolean, CheckConstraint, Integer, String, orm
 
 from src.core.database import Base, mixins
 
@@ -12,6 +12,4 @@ class Feedback(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     is_published: orm.Mapped[bool] = orm.mapped_column(Boolean, default=False)
     is_verified_user: orm.Mapped[bool] = orm.mapped_column(Boolean, default=False)
 
-    __table_args__ = (
-        CheckConstraint('rating >= 1 AND rating <= 5', name='check_rating_range'),
-    )
+    __table_args__ = (CheckConstraint("rating >= 1 AND rating <= 5", name="check_rating_range"),)
