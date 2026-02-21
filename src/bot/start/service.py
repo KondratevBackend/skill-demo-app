@@ -19,11 +19,15 @@ class StartService:
             await self._dao.create_user(telegram_user=message.from_user)
 
         await message.answer(
-            f"<b>Добро пожаловать в VPN-сервис Приватка!</b>\n\n"
+            "✨",
+            reply_markup=await self._keyboard.start_reply_keyboard(),
+        )
+        await message.answer(
+            f"<b>Добро пожаловать в Приватка VPN!</b>\n\n"
             f"⚡️ Быстро.\n"
             f"🌍 Без ограничений.\n"
             f"🛡 Без логов.\n\n"
             f"Выбирай тариф и подключайся за 1 минуту 👇",
             parse_mode="html",
-            reply_markup=await self._keyboard.start_keyboard(),
+            reply_markup=await self._keyboard.start_inline_keyboard(),
         )

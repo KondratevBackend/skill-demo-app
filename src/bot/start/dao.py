@@ -26,5 +26,5 @@ class StartDAO(BaseDAO):
 
     async def get_tariffs(self) -> list[Tariff]:
         async for session in self._db.get_session():
-            result = await session.execute(select(Tariff).order_by(desc(Tariff.price)))
+            result = await session.execute(select(Tariff).order_by(Tariff.order_index))
         return result.scalars().all()
