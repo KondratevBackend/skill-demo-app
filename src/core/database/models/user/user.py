@@ -4,7 +4,7 @@ from src.core.database import Base, mixins
 
 
 class User(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
-    telegram_id: orm.Mapped[int] = orm.mapped_column(BigInteger)
+    telegram_id: orm.Mapped[int] = orm.mapped_column(BigInteger, unique=True, nullable=False)
     user_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=False)
     first_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=True)
     last_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=True)
