@@ -1,5 +1,5 @@
 from aiogram.types import User as TelegramUser
-from sqlalchemy import exists, select, desc
+from sqlalchemy import desc, exists, select
 
 from src.core.database.dao import BaseDAO
 from src.core.database.models import Tariff, User

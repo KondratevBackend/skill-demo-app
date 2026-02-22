@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.enums import ButtonStyle
 
 from src.bot.start.dao import StartDAO
-from src.core.consts import SUPPORT_BUTTON_TEXT, LK_BUTTON_TEXT, FEEDBACK_BUTTON_TEXT, REFERRAL_BUTTON_TEXT
+from src.core.consts import FEEDBACK_BUTTON_TEXT, LK_BUTTON_TEXT, REFERRAL_BUTTON_TEXT, SUPPORT_BUTTON_TEXT
 
 
 class StartKeyboard:
@@ -22,7 +22,7 @@ class StartKeyboard:
                 ],
                 [
                     types.KeyboardButton(text=FEEDBACK_BUTTON_TEXT),
-                ]
+                ],
             ],
             resize_keyboard=True,
             one_time_keyboard=True,

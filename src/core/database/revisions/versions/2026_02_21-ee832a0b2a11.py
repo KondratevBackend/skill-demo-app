@@ -9,8 +9,8 @@ Create Date: 2026-02-21 18:37:10.246277
 
 from typing import Sequence  # noqa: UP035
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "ee832a0b2a11"
@@ -35,12 +35,8 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["lead_id"], ["lead.id"], name=op.f("fk_lead_user_lead_id_lead")
-        ),
-        sa.ForeignKeyConstraint(
-            ["user_id"], ["user.id"], name=op.f("fk_lead_user_user_id_user")
-        ),
+        sa.ForeignKeyConstraint(["lead_id"], ["lead.id"], name=op.f("fk_lead_user_lead_id_lead")),
+        sa.ForeignKeyConstraint(["user_id"], ["user.id"], name=op.f("fk_lead_user_user_id_user")),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_lead_user")),
         sa.UniqueConstraint("user_id", name=op.f("uq_lead_user_user_id")),
     )

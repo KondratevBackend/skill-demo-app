@@ -1,11 +1,10 @@
 import logging
 
-from taskiq import TaskiqScheduler, TaskiqEvents, TaskiqState
+from taskiq import TaskiqEvents, TaskiqScheduler, TaskiqState
 from taskiq.schedule_sources import LabelScheduleSource
 from taskiq_redis import RedisStreamBroker
 
 from src.core.config import WorkerConfig
-
 
 logger = logging.getLogger(__name__)
 
