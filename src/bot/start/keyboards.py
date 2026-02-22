@@ -34,14 +34,16 @@ class StartKeyboard:
         inline_keyboard: list = []
         for tariff in tariffs:
             style = None
-            if not tariff.price:
+            callback_data = f"tariff_select_{tariff.id}"
+            if tariff.is_trial:
                 style = ButtonStyle.DANGER
+                callback_data = f"trial_tariff_select_{tariff.id}"
 
             inline_keyboard.append(
                 [
                     types.InlineKeyboardButton(
                         text=tariff.text,
-                        callback_data=f"tariff_select_{tariff.id}",
+                        callback_data=callback_data,
                         style=style,
                     )
                 ]

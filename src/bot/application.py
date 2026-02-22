@@ -3,6 +3,7 @@ import logging
 
 from aiogram import Bot, Dispatcher, types
 
+from src.bot.middlewares import GlobalMiddleware
 from src.bot.register_handlers import RegisterHandlers
 from src.bot.storage import memory
 from src.core import database
@@ -16,11 +17,13 @@ class Application:
         self,
         db: database.Database,
         config: BotConfig,
+        middleware: GlobalMiddleware,
         register_handlers: RegisterHandlers,
     ):
         self._db = db
         self._config = config
         self._register_handlers = register_handlers
+        self._middleware = middleware
         self._dp = None
         self._bot = None
 
@@ -39,6 +42,7 @@ class Application:
         self._dp = Dispatcher(storage=memory, loop=main_loop)
         self._dp.startup.register(self.on_startup)
         self._dp.shutdown.register(self.on_shutdown)
+        self._middleware.add_middleware(dp=self._dp)
         self._register_handlers.set(dp=self._dp, bot=self._bot)
         return self._dp
 
