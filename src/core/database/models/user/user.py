@@ -40,7 +40,7 @@ class User(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     lead = orm.relationship(
         "LeadUser",
         back_populates="user",
-        foreign_keys="[Lead.user_id]",
+        foreign_keys="[LeadUser.user_id]",
         uselist=False,
         lazy="raise_on_sql",
     )
