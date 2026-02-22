@@ -21,6 +21,15 @@ class DatabaseSettings(pydantic.BaseModel):
     engine_pool_timeout: int = pydantic.Field(default=30)
 
 
+class WorkerBrokerSettings(pydantic.BaseModel):
+    dsn: pydantic.RedisDsn
+
+
 class BotConfig(BaseSettings):
     bot: BotSettings
+    database: DatabaseSettings
+
+
+class WorkerConfig(BaseSettings):
+    broker: WorkerBrokerSettings
     database: DatabaseSettings
