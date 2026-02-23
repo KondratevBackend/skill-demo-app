@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import User, Tariff
+from src.core.database.models import Tariff, User
 
 
 class BotTariffDAO(BaseDAO):
@@ -14,4 +14,3 @@ class BotTariffDAO(BaseDAO):
         async for session in self._db.get_session():
             result = await session.execute(select(Tariff).where(Tariff.id == tariff_id))
         return result.scalar_one()
-

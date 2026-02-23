@@ -11,7 +11,4 @@ def generate_id_from_base(base_id: str, length: int = 10) -> str:
     """
     digest = hashlib.sha256(str(base_id).encode()).digest()
 
-    return ''.join(
-        ALPHABET[b % len(ALPHABET)]
-        for b in digest[:length]
-    )
+    return "".join(ALPHABET[b % len(ALPHABET)] for b in digest[:length])

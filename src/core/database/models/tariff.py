@@ -1,4 +1,5 @@
-from sqlalchemy import Float, Integer, String, orm, Boolean, text as text_orm
+from sqlalchemy import Boolean, Float, Integer, String, orm
+from sqlalchemy import text as text_orm
 
 from src.core.database import Base, mixins
 

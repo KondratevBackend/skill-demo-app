@@ -9,8 +9,8 @@ Create Date: 2026-02-22 20:29:29.871611
 
 from typing import Sequence  # noqa: UP035
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "8952ecc037be"

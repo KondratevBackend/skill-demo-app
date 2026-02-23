@@ -1,4 +1,4 @@
-from src.core.database.models import Tariff, SubscriptionStatusType, User
+from src.core.database.models import SubscriptionStatusType, Tariff, User
 from src.core.server.service import ServerService
 from src.core.tariff.dao import TariffDAO
 

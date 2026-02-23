@@ -1,9 +1,9 @@
 import datetime
 
-from sqlalchemy import select, exists, or_, and_
+from sqlalchemy import and_, exists, or_, select
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import User, Subscription, SubscriptionStatusType, Tariff
+from src.core.database.models import Subscription, SubscriptionStatusType, Tariff, User
 
 
 class TariffDAO(BaseDAO):

@@ -11,7 +11,6 @@ class ServerCookieDAO(BaseDAO):
             server.cookie = cookie
             await session.commit()
 
-
         #     result = await session.execute(
         #         update(ServerModel)
         #         .where(ServerModel.id == server.id)

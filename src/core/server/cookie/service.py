@@ -8,7 +8,6 @@ from src.core.database.models import Server as ServerModel
 from src.core.exceptions import ServerReloginFailedError
 from src.core.server.cookie.dao import ServerCookieDAO
 
-
 logger = logging.getLogger(__name__)
 
 

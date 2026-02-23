@@ -17,8 +17,7 @@ class ServerService:
 
             if not server:
                 raise ServersFullError(
-                    "All server slots are occupied. "
-                    "Please add a server or increase the number of available seats."
+                    "All server slots are occupied. " "Please add a server or increase the number of available seats."
                 )
 
             user = await self._dao.set_user_server(server_id=server.id, user_id=user.id)
