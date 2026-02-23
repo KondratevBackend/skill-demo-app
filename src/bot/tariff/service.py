@@ -20,10 +20,21 @@ class BotTariffService:
         self._subscription_service = subscription_service
 
     async def give_trial_tariff(self, callback: types.CallbackQuery):
+        # TODO: CHECK EXISTS AVAILABLE SERVER
+
         await callback.answer("Активируем пробный тариф")
 
-        # TODO: МОЖНО ЛИ ВЫДАВАТЬ ПРОБНЫЙ ТАРИФ?
         user = await self._dao.get_user(telegram_id=callback.from_user.id)
+        if await self._dao.exists_sub(user_id=user.id):
+            await callback.message.answer(
+                "Раннее ты уже оформлял подписку, поэтому пробный период недоступен\n\n"
+                "Но есть классная альтернатива 😉\n"
+                "Приглашай друзей по реферальной программе и получай <b>бесплатные</b> дни подписки 🎁",
+                parse_mode="html",
+                # todo: referral keyboard + maybe support
+            )
+            return
+
         tariff_id = int(callback.data.split("trial_tariff_select_")[-1])
         tariff = await self._dao.get_tariff(tariff_id=tariff_id)
 
