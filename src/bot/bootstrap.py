@@ -38,6 +38,7 @@ def resolve_resources(config: Config) -> punq.Container:
         service=ServerCookieService,
         factory=ServerCookieService,
         scope=punq.Scope.singleton,
+        config=config.server,
     )
     container.register(
         service=ServerCookieDAO,

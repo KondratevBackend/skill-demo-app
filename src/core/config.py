@@ -13,6 +13,11 @@ class BotSettings(pydantic.BaseModel):
     admins: list[int]
 
 
+class ServerSettings(pydantic.BaseModel):
+    username: str = pydantic.Field(default="admin")
+    password: str = pydantic.Field(default="admin")
+
+
 class DatabaseSettings(pydantic.BaseModel):
     dsn: pydantic.PostgresDsn
     engine_pool_size: int = pydantic.Field(default=20)
@@ -28,6 +33,7 @@ class WorkerBrokerSettings(pydantic.BaseModel):
 class BotConfig(BaseSettings):
     bot: BotSettings
     database: DatabaseSettings
+    server: ServerSettings
 
 
 class WorkerConfig(BaseSettings):

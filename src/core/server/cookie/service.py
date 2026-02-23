@@ -3,6 +3,7 @@ import logging
 
 import aiohttp
 
+from src.core.config import ServerSettings
 from src.core.database.models import Server as ServerModel
 from src.core.exceptions import ServerReloginFailedError
 from src.core.server.cookie.dao import ServerCookieDAO
@@ -14,15 +15,15 @@ logger = logging.getLogger(__name__)
 class ServerCookieService:
     _relogin_lock = asyncio.Lock()
 
-    def __init__(self, dao: ServerCookieDAO):
+    def __init__(self, dao: ServerCookieDAO, config: ServerSettings):
         self._dao = dao
+        self._config = config
 
-    @staticmethod
-    async def __relogin(server: ServerModel):
+    async def __relogin(self, server: ServerModel):
         url = f"{server.domain}/login"
         data = {
-            "username": "admin",
-            "password": "admin",
+            "username": self._config.username,
+            "password": self._config.password,
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(url, data=data) as response:
