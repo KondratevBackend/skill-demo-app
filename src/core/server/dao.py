@@ -1,4 +1,5 @@
 from sqlalchemy import func, or_, select, update
+from sqlalchemy.orm import selectinload
 
 from src.core import consts
 from src.core.database.dao import BaseDAO
@@ -44,8 +45,14 @@ class ServerDAO(BaseDAO):
 
     async def set_user_server(self, user_id: int, server_id: int) -> User:
         async for session in self._db.get_session():
-            result = await session.execute(
+            await session.execute(
                 update(User).where(User.id == user_id).values(server_id=server_id).returning(User)
+            )
+
+            result = await session.execute(
+                select(User)
+                .options(selectinload(User.server))
+                .where(User.id == user_id)
             )
             instance = result.scalar_one()
             await session.commit()

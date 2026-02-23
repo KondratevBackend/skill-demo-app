@@ -23,3 +23,7 @@ class ServerService:
             user = await self._dao.set_user_server(server_id=server.id, user_id=user.id)
 
         await Server(server=user.server, cookie_service=self._cookie_service).add_user(user=user)
+
+    async def get_sub_uri(self, user: User) -> str:
+        default_settings = await Server(server=user.server, cookie_service=self._cookie_service).get_default_settings()
+        return default_settings.sub_uri

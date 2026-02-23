@@ -46,7 +46,7 @@ class Server:
                             "email": str(user.telegram_id),
                             "limitIp": 3,
                             "enable": True,
-                            "subId": generate_id_from_base(user.id),
+                            "subId": user.xui_sub_id,
                         }
                     ]
                 }

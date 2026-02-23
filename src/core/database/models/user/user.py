@@ -1,6 +1,15 @@
+import secrets
+import string
+
 from sqlalchemy import BigInteger, ForeignKey, Integer, String, orm
 
 from src.core.database import Base, mixins
+
+
+def generate_code() -> str:
+    length = 10
+    alphabet = string.ascii_letters
+    return ''.join(secrets.choice(alphabet) for _ in range(length))
 
 
 class User(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
@@ -10,6 +19,12 @@ class User(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     last_name: orm.Mapped[str] = orm.mapped_column(String(length=512), nullable=True)
     email: orm.Mapped[str] = orm.mapped_column(String(length=256), nullable=True)
     phone: orm.Mapped[str] = orm.mapped_column(String(length=128), nullable=True)
+    xui_sub_id: orm.Mapped[str] = orm.mapped_column(
+        String(length=32),
+        unique=True,
+        nullable=False,
+        default=generate_code,
+    )
 
     server_id: orm.Mapped[int] = orm.mapped_column(Integer, ForeignKey("server.id"), nullable=True)
 
