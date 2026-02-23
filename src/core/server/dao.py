@@ -13,7 +13,7 @@ class ServerDAO(BaseDAO):
             total_users_subq = select(func.count(User.id)).where(User.server_id == ServerModel.id).scalar_subquery()
 
             active_users_subq = (
-                select(func.count(User.id))
+                select(func.count(func.distinct(User.id)))
                 .join(Subscription, Subscription.user_id == User.id)
                 .where(
                     User.server_id == ServerModel.id,
