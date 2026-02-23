@@ -14,3 +14,7 @@ services:
       - "2053:2053"
     tty: true
     restart: unless-stopped
+
+networks:
+  default:
+    name: telegram_network

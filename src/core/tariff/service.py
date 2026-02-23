@@ -10,11 +10,11 @@ class TariffService:
 
     async def issue_tariff(self, user: User, tariff: Tariff):
         if not await self._dao.exists_sub(user_id=user.id):
-            await self._dao.add_sub(
-                user_id=user.id,
-                tariff=tariff,
-                status=SubscriptionStatusType.active,
-            )
+            # await self._dao.add_sub(
+            #     user_id=user.id,
+            #     tariff=tariff,
+            #     status=SubscriptionStatusType.active,
+            # )
             await self._server_service.enable_user(user=user)
             return
 
