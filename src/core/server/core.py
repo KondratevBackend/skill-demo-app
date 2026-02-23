@@ -6,6 +6,7 @@ import aiohttp
 from src.core.database.models import Server as ServerModel
 from src.core.database.models import User
 from src.core.server.cookie.service import ServerCookieService
+from src.core.server.dto import ServerDefaultSettingsDTO
 from src.core.utils import generate_id_from_base
 
 logger = logging.getLogger(__name__)
@@ -20,6 +21,17 @@ class Server:
             "Cookie": self.server.cookie if self.server.cookie else "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
         }
+
+    async def get_default_settings(self) -> ServerDefaultSettingsDTO:
+        url = f"{self.server.domain}/panel/setting/defaultSettings"
+        async with aiohttp.ClientSession() as session:
+            response = await session.post(url, headers=self.headers)
+
+            if response.status == 404:
+                await self._cookie_service.handle_new_cookie(self_server=self)
+                response = await session.post(url, headers=self.headers)
+
+            return ServerDefaultSettingsDTO(**(await response.json())["obj"])
 
     async def add_user(self, user: User) -> None:
         url = f"{self.server.domain}/panel/api/inbounds/addClient"
