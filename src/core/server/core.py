@@ -4,34 +4,26 @@ import logging
 import aiohttp
 
 from src.core.database.models import Server as ServerModel, User
+from src.core.server.cookie.service import ServerCookieService
 from src.core.utils import generate_id_from_base
 
 logger = logging.getLogger(__name__)
 
 
 class Server:
-    def __init__(self, server: ServerModel):
-        self._server = server
-        self._headers = {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Cookie': server.cookie,
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    def __init__(self, server: ServerModel, cookie_service: ServerCookieService):
+        self.server = server
+        self._cookie_service = cookie_service
+        self.headers = {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Cookie": self.server.cookie if self.server.cookie else "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
         }
-
-    async def login(self):
-        url = f"{self._server.domain}/login"
-        data = {
-            "username": "admin",
-            "password": "admin",
-        }
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, data=data, headers=self._headers) as response:
-                return response.cookies
 
     async def add_user(self, user: User):
-        url = f"{self._server.domain}/panel/api/inbounds/addClient"
+        url = f"{self.server.domain}/panel/api/inbounds/addClient"
         user_data = {
-            "id": self._server.connection_id,
+            "id": self.server.connection_id,
             "settings": json.dumps({
                 "clients": [
                     {
@@ -45,8 +37,12 @@ class Server:
                 ]
             })
         }
-        xui_session = await self.login()
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=user_data, cookies=xui_session) as response:
-                text = await response.text()
-                logger.info(text)
+            response = await session.post(url, data=user_data, headers=self.headers)
+
+            if response.status == 404:
+                await self._cookie_service.handle_new_cookie(self_server=self)
+                response = await session.post(url, data=user_data, headers=self.headers)
+
+            text = await response.text()
+            logger.info(text)

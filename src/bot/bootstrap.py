@@ -11,6 +11,8 @@ from src.bot.tariff.handlers import BotTariffHandlers
 from src.bot.tariff.service import BotTariffService
 from src.core.config import BotConfig as Config
 from src.core.database import Database
+from src.core.server.cookie.dao import ServerCookieDAO
+from src.core.server.cookie.service import ServerCookieService
 from src.core.server.dao import ServerDAO
 from src.core.server.service import ServerService
 from src.core.tariff.dao import TariffDAO
@@ -31,6 +33,16 @@ def resolve_resources(config: Config) -> punq.Container:
         factory=GlobalMiddleware,
         scope=punq.Scope.singleton,
         config=config,
+    )
+    container.register(
+        service=ServerCookieService,
+        factory=ServerCookieService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=ServerCookieDAO,
+        factory=ServerCookieDAO,
+        scope=punq.Scope.singleton,
     )
     container.register(
         service=RegisterHandlers,

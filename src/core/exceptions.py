@@ -4,3 +4,11 @@ class APINotStartupError(Exception):
 
 class ServersFullError(Exception):
     pass
+
+
+class ServerCookieExpiredError(Exception):
+    pass
+
+
+class ServerReloginFailedError(Exception):
+    pass
