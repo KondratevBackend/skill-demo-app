@@ -21,7 +21,7 @@ class Server:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
         }
 
-    async def add_user(self, user: User):
+    async def add_user(self, user: User) -> None:
         url = f"{self.server.domain}/panel/api/inbounds/addClient"
         user_data = {
             "id": self.server.connection_id,
@@ -49,3 +49,14 @@ class Server:
 
             text = await response.text()
             logger.info(text)
+
+    async def delete_user(self, user: User) -> None:
+        url = f"{self.server.domain}/panel/api/inbounds/{self.server.connection_id}/delClient/{user.telegram_id}"
+        async with aiohttp.ClientSession() as session:
+            response = await session.post(url, headers=self.headers)
+
+            if response.status == 404:
+                await self._cookie_service.handle_new_cookie(self_server=self)
+                response = await session.post(url, headers=self.headers)
+
+            logger.info(await response.text())
