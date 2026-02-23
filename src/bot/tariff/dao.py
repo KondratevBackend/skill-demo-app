@@ -1,4 +1,5 @@
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from src.core.database.dao import BaseDAO
 from src.core.database.models import Tariff, User
@@ -7,7 +8,12 @@ from src.core.database.models import Tariff, User
 class BotTariffDAO(BaseDAO):
     async def get_user(self, telegram_id: int) -> User:
         async for session in self._db.get_session():
-            result = await session.execute(select(User).where(User.telegram_id == telegram_id))
+            query = (
+                select(User)
+                .options(selectinload(User.server))
+                .where(User.telegram_id == telegram_id)
+            )
+            result = await session.execute(query)
         return result.scalar_one()
 
     async def get_tariff(self, tariff_id: int) -> Tariff:

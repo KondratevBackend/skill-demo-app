@@ -22,5 +22,4 @@ class ServerService:
 
             user = await self._dao.set_user_server(server_id=server.id, user_id=user.id)
 
-        server = await self._dao.get_server(server_id=user.server_id)
-        await Server(server=server, cookie_service=self._cookie_service).add_user(user=user)
+        await Server(server=user.server, cookie_service=self._cookie_service).add_user(user=user)
