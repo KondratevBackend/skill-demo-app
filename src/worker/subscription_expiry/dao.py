@@ -43,6 +43,7 @@ class SubscriptionExpiryWorkerDAO(BaseDAO):
                     )
                 )
                 .order_by(Subscription.created_at)
+                .limit(1)
             )
             result = await session.execute(query)
         return result.scalar_one_or_none()

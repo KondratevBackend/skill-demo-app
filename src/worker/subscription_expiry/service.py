@@ -22,7 +22,7 @@ class SubscriptionExpiryWorkerService:
 
         next_subscription = await self._dao.get_earliest_pending_subscription(subscription.user_id)
         if next_subscription:
-            await self._dao.activate_subscription(subscription_id=next_subscription.id)
+            await self._dao.activate_subscription(subscription=next_subscription)
         else:
             user = await self._dao.get_user(user_id=subscription.user_id)
             await self._server_service.disable_user(user=user)

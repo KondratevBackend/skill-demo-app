@@ -15,6 +15,6 @@ def get_service() -> SubscriptionExpiryWorkerService:
 
 @broker.task(schedule=[{"cron": "* * * * *"}])
 async def tariff_expiry_worker(service: SubscriptionExpiryWorkerService = TaskiqDepends(get_service)):
-    logger.debug("Subscription expiry job started")
+    logger.info("Subscription expiry job started")
     await service.process()
-    logger.debug("Subscription expiry job completed")
+    logger.info("Subscription expiry job completed")
