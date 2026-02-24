@@ -43,17 +43,8 @@ class ServerDAO(BaseDAO):
             result = await session.execute(select(ServerModel).where(ServerModel.id == server_id))
         return result.scalar_one()
 
-    async def set_user_server(self, user_id: int, server_id: int) -> User:
+    async def set_user_server(self, user: User, server_id: int) -> User:
         async for session in self._db.get_session():
-            await session.execute(
-                update(User).where(User.id == user_id).values(server_id=server_id).returning(User)
-            )
-
-            result = await session.execute(
-                select(User)
-                .options(selectinload(User.server))
-                .where(User.id == user_id)
-            )
-            instance = result.scalar_one()
+            user.server_id = server_id
+            session.add(user)
             await session.commit()
-        return instance

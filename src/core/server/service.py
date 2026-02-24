@@ -1,5 +1,4 @@
-from src.core import consts
-from src.core.database.models import User
+from src.core.database.models import User, Server as ServerModel
 from src.core.exceptions import ServersFullError
 from src.core.server import Server
 from src.core.server.cookie.service import ServerCookieService
@@ -20,10 +19,11 @@ class ServerService:
                     "All server slots are occupied. " "Please add a server or increase the number of available seats."
                 )
 
-            user = await self._dao.set_user_server(server_id=server.id, user_id=user.id)
+            await self._dao.set_user_server(server_id=server.id, user=user)
 
-        await Server(server=user.server, cookie_service=self._cookie_service).add_user(user=user)
+        server = await self._dao.get_server(server_id=user.server_id)
+        await Server(server=server, cookie_service=self._cookie_service).add_user(user=user)
 
-    async def get_sub_uri(self, user: User) -> str:
-        default_settings = await Server(server=user.server, cookie_service=self._cookie_service).get_default_settings()
+    async def get_sub_uri(self, server: ServerModel) -> str:
+        default_settings = await Server(server=server, cookie_service=self._cookie_service).get_default_settings()
         return default_settings.sub_uri

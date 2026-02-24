@@ -63,7 +63,6 @@ class BotTariffDAO(BaseDAO):
         async for session in self._db.get_session():
             query = (
                 select(User)
-                .options(selectinload(User.server))
                 .where(User.telegram_id == telegram_id)
             )
             result = await session.execute(query)

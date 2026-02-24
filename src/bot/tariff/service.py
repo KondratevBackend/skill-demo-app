@@ -20,7 +20,10 @@ class BotTariffService:
         self._subscription_service = subscription_service
 
     async def give_trial_tariff(self, callback: types.CallbackQuery):
-        if not await self._dao.exists_available_server():
+        await callback.answer("Активируем пробный тариф")
+
+        user = await self._dao.get_user(telegram_id=callback.from_user.id)
+        if not user.server_id and not await self._dao.exists_available_server():
             await callback.message.answer(
                 "Сейчас наблюдается высокая нагрузка — <b>все серверы временно переполнены</b>\n\n"
                 "Команда уже занимается этим вопросом 💪\n\n"
@@ -29,9 +32,6 @@ class BotTariffService:
             )
             return
 
-        await callback.answer("Активируем пробный тариф")
-
-        user = await self._dao.get_user(telegram_id=callback.from_user.id)
         if await self._dao.exists_sub(user_id=user.id):
             await callback.message.answer(
                 "Раннее ты уже оформлял подписку, поэтому пробный период недоступен\n\n"
@@ -54,7 +54,6 @@ class BotTariffService:
             f"Пробуй все функции, оцени удобство, и не стесняйся спрашивать поддержку, если появятся вопросы",
             parse_mode="html"
         )
-        # TODO: BUG FIRST BUY
         await self._subscription_service.send_link_to_connection(
             message=callback.message,
             user=user,
