@@ -1,7 +1,7 @@
 import datetime
 from enum import StrEnum
 
-from sqlalchemy import DateTime, Enum, ForeignKey, Integer, orm
+from sqlalchemy import DateTime, Enum, ForeignKey, Integer, orm, CheckConstraint
 
 from src.core.database import Base, mixins
 
@@ -15,8 +15,8 @@ class SubscriptionStatusType(StrEnum):
 
 class Subscription(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     status: orm.Mapped[SubscriptionStatusType] = orm.mapped_column(Enum(SubscriptionStatusType), nullable=False)
-    starts_at: orm.Mapped[datetime.datetime] = orm.mapped_column(DateTime, nullable=False)
-    expires_at: orm.Mapped[datetime.datetime] = orm.mapped_column(DateTime, nullable=False)
+    starts_at: orm.Mapped[datetime.datetime] = orm.mapped_column(DateTime, nullable=True)
+    expires_at: orm.Mapped[datetime.datetime] = orm.mapped_column(DateTime, nullable=True)
 
     tariff_id: orm.Mapped[int] = orm.mapped_column(Integer, ForeignKey("tariff.id"), nullable=False)
     user_id: orm.Mapped[int] = orm.mapped_column(Integer, ForeignKey("user.id"), nullable=False)
@@ -33,3 +33,4 @@ class Subscription(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
         foreign_keys=[user_id],
         lazy="raise_on_sql",
     )
+

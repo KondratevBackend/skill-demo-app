@@ -1,3 +1,5 @@
+import datetime
+
 from src.core.database.models import SubscriptionStatusType, Tariff, User
 from src.core.server.service import ServerService
 from src.core.tariff.dao import TariffDAO
@@ -14,6 +16,8 @@ class TariffService:
                 user_id=user.id,
                 tariff=tariff,
                 status=SubscriptionStatusType.active,
+                starts_at=datetime.datetime.now(),
+                expires_at=datetime.datetime.now() + datetime.timedelta(days=tariff.days),
             )
             await self._server_service.enable_user(user=user)
             return

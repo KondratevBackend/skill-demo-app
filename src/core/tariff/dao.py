@@ -26,14 +26,21 @@ class TariffDAO(BaseDAO):
 
         return result.scalar_one()
 
-    async def add_sub(self, user_id: int, tariff: Tariff, status: SubscriptionStatusType) -> Subscription:
+    async def add_sub(
+        self,
+        user_id: int,
+        tariff: Tariff,
+        status: SubscriptionStatusType,
+        starts_at: datetime.datetime = None,
+        expires_at: datetime.datetime = None,
+    ) -> Subscription:
         async for session in self._db.get_session():
             instance = Subscription(
                 user_id=user_id,
                 tariff_id=tariff.id,
                 status=status,
-                starts_at=datetime.datetime.now(),
-                expires_at=datetime.datetime.now() + datetime.timedelta(days=tariff.days),
+                starts_at=starts_at,
+                expires_at=expires_at,
             )
             session.add(instance)
             await session.commit()

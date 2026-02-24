@@ -10,13 +10,3 @@ class ServerCookieDAO(BaseDAO):
             server = await session.merge(server)
             server.cookie = cookie
             await session.commit()
-
-        #     result = await session.execute(
-        #         update(ServerModel)
-        #         .where(ServerModel.id == server.id)
-        #         .values(cookie=cookie)
-        #         .returning(ServerModel)
-        #     )
-        #     instance = result.scalar_one()
-        #     await session.commit()
-        # return instance
