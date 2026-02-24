@@ -4,6 +4,7 @@ from src.bot import bot
 from src.core.database.models import Subscription
 from src.core.server.service import ServerService
 from src.worker.subscription_expiry.dao import SubscriptionExpiryWorkerDAO
+from src.worker.subscription_expiry.keyboards import sub_expiry_keyboard
 
 
 class SubscriptionExpiryWorkerService:
@@ -28,7 +29,11 @@ class SubscriptionExpiryWorkerService:
             await self._server_service.disable_user(user=user)
             await bot.send_message(
                 chat_id=user.telegram_id,
-                text="Тариф истек и ты был отключен от сервера :(",
+                text=(
+                    f"⏳ <b>Тариф истёк</b>\n\n"
+                    f"Не теряй доступ — продли подписку прямо сейчас\n\n"
+                    f"Если есть вопросы или что-то не устроило — не стесняйся обращаться в поддержку 🙌"
+                ),
                 parse_mode="html",
-                # todo: keyboard tariffs
+                reply_markup=sub_expiry_keyboard
             )
