@@ -39,3 +39,4 @@ class BotConfig(BaseSettings):
 class WorkerConfig(BaseSettings):
     broker: WorkerBrokerSettings
     database: DatabaseSettings
+    server: ServerSettings

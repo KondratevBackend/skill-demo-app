@@ -10,7 +10,11 @@ class ServerService:
         self._dao = dao
         self._cookie_service = cookie_service
 
-    async def enable_user(self, user: User) -> bool:
+    async def disable_user(self, user: User) -> None:
+        server = await self._dao.get_server(server_id=user.server_id)
+        await Server(server=server, cookie_service=self._cookie_service).delete_user(user=user)
+
+    async def enable_user(self, user: User) -> None:
         if not user.server_id:
             server = await self._dao.get_available_server()
 
