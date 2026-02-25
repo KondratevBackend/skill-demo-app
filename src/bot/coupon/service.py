@@ -15,3 +15,6 @@ class CouponService:
             "🎟️ Напиши код купона: ",
             parse_mode="html",
         )
+
+    async def activate_coupon(self, message: types.Message, state: FSMContext):
+        pass
