@@ -7,6 +7,9 @@ from src.bot.admin.coupon.service import CouponAdminService
 from src.bot.admin.filters import IsAdminFilter
 from src.bot.admin.start.handlers import StartAdminHandlers
 from src.bot.admin.start.service import StartAdminService
+from src.bot.coupon.dao import CouponDAO
+from src.bot.coupon.handlers import CouponHandlers
+from src.bot.coupon.service import CouponService
 from src.bot.middlewares import GlobalMiddleware
 from src.bot.register_handlers import RegisterHandlers
 from src.bot.start.dao import StartDAO
@@ -87,6 +90,21 @@ def resolve_resources(config: Config) -> punq.Container:
     container.register(
         service=SubscriptionDAO,
         factory=SubscriptionDAO,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponHandlers,
+        factory=CouponHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponService,
+        factory=CouponService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponDAO,
+        factory=CouponDAO,
         scope=punq.Scope.singleton,
     )
 
