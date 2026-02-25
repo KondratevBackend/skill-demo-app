@@ -16,6 +16,8 @@ from src.bot.start.dao import StartDAO
 from src.bot.start.handlers import StartHandlers
 from src.bot.start.keyboards import StartKeyboard
 from src.bot.start.service import StartService
+from src.bot.stop_fsm.handlers import StopFSMHandlers
+from src.bot.stop_fsm.service import StopFSMService
 from src.bot.subscription.dao import SubscriptionDAO
 from src.bot.subscription.service import SubscriptionService
 from src.bot.tariff.dao import BotTariffDAO
@@ -60,6 +62,16 @@ def resolve_resources(config: Config) -> punq.Container:
     container.register(
         service=RegisterHandlers,
         factory=RegisterHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=StopFSMHandlers,
+        factory=StopFSMHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=StopFSMService,
+        factory=StopFSMService,
         scope=punq.Scope.singleton,
     )
     container.register(
