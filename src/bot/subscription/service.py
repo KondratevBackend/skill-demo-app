@@ -18,7 +18,5 @@ class SubscriptionService:
     async def send_link_to_connection(self, message: types.Message, user: User) -> None:
         connection_link = await self.get_connection_link(user=user)
         await message.answer(
-            text=f"<code>{connection_link}</code>",
-            parse_mode="html",
-            reply_markup=instruction_keyboard
+            text=f"<code>{connection_link}</code>", parse_mode="html", reply_markup=instruction_keyboard
         )

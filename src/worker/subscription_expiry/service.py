@@ -35,5 +35,5 @@ class SubscriptionExpiryWorkerService:
                     f"Если есть вопросы или что-то не устроило — не стесняйся обращаться в поддержку 🙌"
                 ),
                 parse_mode="html",
-                reply_markup=sub_expiry_keyboard
+                reply_markup=sub_expiry_keyboard,
             )

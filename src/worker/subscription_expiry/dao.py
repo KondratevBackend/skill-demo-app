@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import select, update, and_
+from sqlalchemy import and_, select, update
 from sqlalchemy.orm import joinedload
 
 from src.core.database.dao import BaseDAO
@@ -10,22 +10,16 @@ from src.core.database.models import Subscription, SubscriptionStatusType, User
 class SubscriptionExpiryWorkerDAO(BaseDAO):
     async def get_user(self, user_id: int):
         async for session in self._db.get_session():
-            query = (
-                select(User)
-                .where(User.id == user_id)
-            )
+            query = select(User).where(User.id == user_id)
             result = await session.execute(query)
         return result.scalar_one()
 
     async def get_subscriptions_with_expire_data_and_active(self) -> list[Subscription]:
         async for session in self._db.get_session():
-            query = (
-                select(Subscription)
-                .where(
-                    and_(
-                        Subscription.status == SubscriptionStatusType.active,
-                        Subscription.expires_at <= datetime.datetime.now(),
-                    )
+            query = select(Subscription).where(
+                and_(
+                    Subscription.status == SubscriptionStatusType.active,
+                    Subscription.expires_at <= datetime.datetime.now(),
                 )
             )
             result = await session.execute(query)

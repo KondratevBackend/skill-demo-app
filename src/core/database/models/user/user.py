@@ -9,7 +9,7 @@ from src.core.database import Base, mixins
 def generate_code() -> str:
     length = 10
     alphabet = string.ascii_letters
-    return ''.join(secrets.choice(alphabet) for _ in range(length))
+    return "".join(secrets.choice(alphabet) for _ in range(length))
 
 
 class User(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):

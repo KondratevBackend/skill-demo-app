@@ -11,8 +11,6 @@ sub_expiry_keyboard = types.InlineKeyboardMarkup(
                 style=ButtonStyle.SUCCESS,
             )
         ],
-        [
-            types.InlineKeyboardButton(text="Поддержка 🛠", callback_data="support")
-        ],
-    ]
+        [types.InlineKeyboardButton(text="Поддержка 🛠", callback_data="support")],
+    ],
 )

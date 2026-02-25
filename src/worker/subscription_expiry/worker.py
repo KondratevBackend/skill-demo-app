@@ -2,9 +2,8 @@ import logging
 
 from taskiq import TaskiqDepends
 
-from src.worker.main import container, broker
+from src.worker.main import broker, container
 from src.worker.subscription_expiry.service import SubscriptionExpiryWorkerService
-
 
 logger = logging.getLogger(__name__)
 

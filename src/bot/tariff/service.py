@@ -12,7 +12,7 @@ class BotTariffService:
         dao: BotTariffDAO,
         tariff_service: TariffService,
         server_service: ServerService,
-        subscription_service: SubscriptionService
+        subscription_service: SubscriptionService,
     ):
         self._dao = dao
         self._tariff_service = tariff_service
@@ -52,7 +52,7 @@ class BotTariffService:
             f"<b>Ура! Пробный тариф успешно подключен</b> 🔥\n\n"
             f"Тестируй сервис <b>{tariff.days}</b> дня и подключай до <b>{tariff.limit_ip} устройств</b> 🖥️📱💻\n\n"
             f"Пробуй все функции, оцени удобство, и не стесняйся спрашивать поддержку, если появятся вопросы",
-            parse_mode="html"
+            parse_mode="html",
         )
         await self._subscription_service.send_link_to_connection(
             message=callback.message,

@@ -1,7 +1,7 @@
 import datetime
 from enum import StrEnum
 
-from sqlalchemy import DateTime, Enum, ForeignKey, Integer, orm, CheckConstraint
+from sqlalchemy import CheckConstraint, DateTime, Enum, ForeignKey, Integer, orm
 
 from src.core.database import Base, mixins
 
@@ -33,4 +33,3 @@ class Subscription(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
         foreign_keys=[user_id],
         lazy="raise_on_sql",
     )
-

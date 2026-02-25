@@ -17,6 +17,4 @@ class ServerDefaultSettingsDTO(BaseModel):
     tg_bot_enable: bool = Field(alias="tgBotEnable")
     traffic_diff: int = Field(alias="trafficDiff")
 
-    model_config = {
-        "populate_by_name": True
-    }
+    model_config = {"populate_by_name": True}

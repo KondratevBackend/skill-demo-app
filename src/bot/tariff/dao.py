@@ -1,19 +1,16 @@
-from sqlalchemy import select, exists, and_, func, or_
+from sqlalchemy import and_, exists, func, or_, select
 from sqlalchemy.orm import selectinload
 
 from src.core import consts
 from src.core.database.dao import BaseDAO
-from src.core.database.models import Tariff, User, Subscription, SubscriptionStatusType, Server as ServerModel
+from src.core.database.models import Server as ServerModel
+from src.core.database.models import Subscription, SubscriptionStatusType, Tariff, User
 
 
 class BotTariffDAO(BaseDAO):
     async def exists_available_server(self) -> bool:
         async for session in self._db.get_session():
-            total_users_subq = (
-                select(func.count(User.id))
-                .where(User.server_id == ServerModel.id)
-                .scalar_subquery()
-            )
+            total_users_subq = select(func.count(User.id)).where(User.server_id == ServerModel.id).scalar_subquery()
 
             active_users_subq = (
                 select(func.count(func.distinct(User.id)))
@@ -61,10 +58,7 @@ class BotTariffDAO(BaseDAO):
 
     async def get_user(self, telegram_id: int) -> User:
         async for session in self._db.get_session():
-            query = (
-                select(User)
-                .where(User.telegram_id == telegram_id)
-            )
+            query = select(User).where(User.telegram_id == telegram_id)
             result = await session.execute(query)
         return result.scalar_one()
 

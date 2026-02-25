@@ -1,4 +1,5 @@
-from src.core.database.models import User, Server as ServerModel
+from src.core.database.models import Server as ServerModel
+from src.core.database.models import User
 from src.core.exceptions import ServersFullError
 from src.core.server import Server
 from src.core.server.cookie.service import ServerCookieService
