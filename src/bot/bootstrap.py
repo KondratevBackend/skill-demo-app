@@ -1,5 +1,8 @@
 import punq
 
+from src.bot.admin.filters import IsAdminFilter
+from src.bot.admin.start.handlers import StartAdminHandlers
+from src.bot.admin.start.services import StartAdminService
 from src.bot.middlewares import GlobalMiddleware
 from src.bot.register_handlers import RegisterHandlers
 from src.bot.start.dao import StartDAO
@@ -83,10 +86,30 @@ def resolve_resources(config: Config) -> punq.Container:
         scope=punq.Scope.singleton,
     )
 
+    register_admin(container=container, config=config)
     register_start(container=container)
     register_bot_tariff(container=container)
 
     return container
+
+
+def register_admin(container: punq.Container, config: Config) -> None:
+    container.register(
+        service=IsAdminFilter,
+        factory=IsAdminFilter,
+        scope=punq.Scope.singleton,
+        config=config,
+    )
+    container.register(
+        service=StartAdminHandlers,
+        factory=StartAdminHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=StartAdminService,
+        factory=StartAdminService,
+        scope=punq.Scope.singleton,
+    )
 
 
 def register_start(container: punq.Container) -> None:
