@@ -12,3 +12,7 @@ class ServerCookieExpiredError(Exception):
 
 class ServerReloginFailedError(Exception):
     pass
+
+
+class NotFoundError(Exception):
+    pass

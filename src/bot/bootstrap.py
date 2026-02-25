@@ -1,8 +1,12 @@
 import punq
 
+from src.bot.admin.coupon.dao import CouponAdminDAO
+from src.bot.admin.coupon.handlers import CouponAdminHandlers
+from src.bot.admin.coupon.keyboards import CouponAdminKeyboards
+from src.bot.admin.coupon.service import CouponAdminService
 from src.bot.admin.filters import IsAdminFilter
 from src.bot.admin.start.handlers import StartAdminHandlers
-from src.bot.admin.start.services import StartAdminService
+from src.bot.admin.start.service import StartAdminService
 from src.bot.middlewares import GlobalMiddleware
 from src.bot.register_handlers import RegisterHandlers
 from src.bot.start.dao import StartDAO
@@ -108,6 +112,26 @@ def register_admin(container: punq.Container, config: Config) -> None:
     container.register(
         service=StartAdminService,
         factory=StartAdminService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponAdminHandlers,
+        factory=CouponAdminHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponAdminService,
+        factory=CouponAdminService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponAdminDAO,
+        factory=CouponAdminDAO,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=CouponAdminKeyboards,
+        factory=CouponAdminKeyboards,
         scope=punq.Scope.singleton,
     )
 

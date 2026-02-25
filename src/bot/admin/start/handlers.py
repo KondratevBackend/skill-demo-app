@@ -2,7 +2,7 @@ from aiogram import Dispatcher, types
 from aiogram.filters import Command
 
 from src.bot.admin.filters import IsAdminFilter
-from src.bot.admin.start.services import StartAdminService
+from src.bot.admin.start.service import StartAdminService
 
 
 class StartAdminHandlers:
