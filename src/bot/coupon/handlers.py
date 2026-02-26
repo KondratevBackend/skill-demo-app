@@ -16,4 +16,4 @@ class CouponHandlers:
 
         @dp.message(CouponFSM.get_code)
         async def activate_coupon_handler(message: types.Message, state: FSMContext):
-            pass
+            await self._service.activate_coupon(message=message, state=state)
