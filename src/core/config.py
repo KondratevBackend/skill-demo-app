@@ -11,6 +11,7 @@ class BaseSettings(pydantic_settings.BaseSettings):
 class BotSettings(pydantic.BaseModel):
     token: str
     admins: list[int]
+    support_url: pydantic.HttpUrl = pydantic.Field(default="https://t.me/privatka_support")
 
 
 class ServerSettings(pydantic.BaseModel):

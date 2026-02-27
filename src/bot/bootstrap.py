@@ -20,6 +20,7 @@ from src.bot.stop_fsm.handlers import StopFSMHandlers
 from src.bot.stop_fsm.service import StopFSMService
 from src.bot.subscription.dao import SubscriptionDAO
 from src.bot.subscription.service import SubscriptionService
+from src.bot.support.keyboards import SupportKeyboards
 from src.bot.tariff.dao import BotTariffDAO
 from src.bot.tariff.handlers import BotTariffHandlers
 from src.bot.tariff.service import BotTariffService
@@ -117,6 +118,11 @@ def resolve_resources(config: Config) -> punq.Container:
     container.register(
         service=CouponDAO,
         factory=CouponDAO,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=SupportKeyboards,
+        factory=SupportKeyboards,
         scope=punq.Scope.singleton,
     )
 
