@@ -10,6 +10,9 @@ from src.bot.admin.start.service import StartAdminService
 from src.bot.coupon.dao import CouponDAO
 from src.bot.coupon.handlers import CouponHandlers
 from src.bot.coupon.service import CouponService
+from src.bot.lk.dao import LKDAO
+from src.bot.lk.handlers import LKHandlers
+from src.bot.lk.service import LKService
 from src.bot.middlewares import GlobalMiddleware
 from src.bot.register_handlers import RegisterHandlers
 from src.bot.start.dao import StartDAO
@@ -125,6 +128,21 @@ def resolve_resources(config: Config) -> punq.Container:
         factory=SupportKeyboards,
         scope=punq.Scope.singleton,
         config=config,
+    )
+    container.register(
+        service=LKHandlers,
+        factory=LKHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=LKService,
+        factory=LKService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=LKDAO,
+        factory=LKDAO,
+        scope=punq.Scope.singleton,
     )
 
     register_admin(container=container, config=config)
