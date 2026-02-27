@@ -5,6 +5,7 @@ from aiogram.fsm.context import FSMContext
 
 from src.bot.coupon.dao import CouponDAO
 from src.bot.coupon.fsm import CouponFSM
+from src.bot.support.keyboards import SupportKeyboards
 from src.core.tariff.service import TariffService
 
 
@@ -20,9 +21,11 @@ class CouponService:
         self,
         dao: CouponDAO,
         tariff_service: TariffService,
+        support_keyboards: SupportKeyboards,
     ):
         self._dao = dao
         self._tariff_service = tariff_service
+        self._support_keyboards = support_keyboards
 
     async def start_coupon(self, callback: types.CallbackQuery, state: FSMContext):
         await state.set_state(CouponFSM.get_code)
@@ -59,5 +62,5 @@ class CouponService:
                 "⚠️ Возникла техническая ошибка\n\n"
                 "Пожалуйста, напиши в поддержку — мы разберёмся 👨‍🔧",
                 parse_mode="html",
-                # todo: keyboard support
+                reply_markup=self._support_keyboards.support_keyboard()
             )
