@@ -124,6 +124,7 @@ def resolve_resources(config: Config) -> punq.Container:
         service=SupportKeyboards,
         factory=SupportKeyboards,
         scope=punq.Scope.singleton,
+        config=config,
     )
 
     register_admin(container=container, config=config)
