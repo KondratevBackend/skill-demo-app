@@ -52,10 +52,11 @@ class CouponService:
             user = await self._dao.get_user(telegram_id=message.from_user.id)
             await self._tariff_service.issue_tariff(user=user, tariff=coupon.tariff)
             await message.answer(
-                f"✅ Купон успешно активирован!\n\n"
-                f"Тебе начислено {coupon.tariff.days} дней безлимитного VPN 🚀\n\n"
+                f"✅ <b>Купон успешно активирован!</b>\n\n"
+                f"Тебе начислено <i>{coupon.tariff.days} дней</i> безлимитного VPN 🚀\n\n"
                 f"Пользуйся безопасно и без ограничений 💙",
                 parse_mode="html",
+                # TODO: keyboard lk
             )
         except Exception as e:
             await message.answer(
@@ -64,3 +65,4 @@ class CouponService:
                 parse_mode="html",
                 reply_markup=self._support_keyboards.support_keyboard()
             )
+            raise e
