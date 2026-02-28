@@ -10,7 +10,7 @@ class HealthChecksRouter:
 
     @property
     def router(self) -> fastapi.APIRouter:
-        router = fastapi.APIRouter(prefix="/health", tags=["Health Checks Webhook"])
+        router = fastapi.APIRouter(prefix="/health", tags=["Health Checks API"])
         self._include_routes(router=router)
         return router
 

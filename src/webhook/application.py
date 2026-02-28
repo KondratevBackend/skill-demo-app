@@ -4,16 +4,19 @@ import fastapi
 
 from src.core.database import Database
 from src.webhook import health_checks
+from src.webhook import yookassa
 
 
 class Application:
     def __init__(
         self,
         health_checks_router: health_checks.router.HealthChecksRouter,
+        yookassa_router: yookassa.router.YookassaRouter,
         db: Database,
     ):
         self._db = db
         self._health_checks_router = health_checks_router
+        self._yookassa_router = yookassa_router
         self._app = None
 
     @property
@@ -30,7 +33,7 @@ class Application:
             title="Приватка Webhook",
             version="1.0.0",
             lifespan=lifespan,
-            root_path="/src",
+            root_path="/webhook",
             openapi_url="/opnapi.json",
         )
         self._set_up(server=server)
@@ -40,3 +43,4 @@ class Application:
 
     def _set_up(self, server: fastapi.FastAPI) -> None:
         server.include_router(self._health_checks_router.router)
+        server.include_router(self._yookassa_router.router)

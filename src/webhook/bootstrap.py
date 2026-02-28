@@ -9,6 +9,9 @@ from src.core.server.service import ServerService
 from src.core.tariff.dao import TariffDAO
 from src.core.tariff.service import TariffService
 from src.webhook.health_checks.router import HealthChecksRouter
+from src.webhook.yookassa.dao import YookassaDAO
+from src.webhook.yookassa.router import YookassaRouter
+from src.webhook.yookassa.service import YookassaService
 
 
 def resolve_resources(config: WebhookConfig) -> punq.Container:
@@ -58,4 +61,25 @@ def resolve_resources(config: WebhookConfig) -> punq.Container:
         scope=punq.Scope.singleton,
     )
 
+    register_yookassa(container=container, config=config)
+
     return container
+
+
+def register_yookassa(container: punq.Container, config: WebhookConfig) -> None:
+    container.register(
+        service=YookassaRouter,
+        factory=YookassaRouter,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=YookassaService,
+        factory=YookassaService,
+        scope=punq.Scope.singleton,
+        config=config,
+    )
+    container.register(
+        service=YookassaDAO,
+        factory=YookassaDAO,
+        scope=punq.Scope.singleton,
+    )
