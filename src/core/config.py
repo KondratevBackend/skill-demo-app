@@ -27,6 +27,13 @@ class DatabaseSettings(pydantic.BaseModel):
     engine_pool_timeout: int = pydantic.Field(default=30)
 
 
+class WebhookSettings(pydantic.BaseModel):
+    port: int = pydantic.Field(default=8000)
+    reload: bool = pydantic.Field(default=False)
+    workers: int = pydantic.Field(default=1)
+    root_path: str = pydantic.Field(default="")
+
+
 class WorkerBrokerSettings(pydantic.BaseModel):
     dsn: pydantic.RedisDsn
 
@@ -41,3 +48,10 @@ class WorkerConfig(BaseSettings):
     broker: WorkerBrokerSettings
     database: DatabaseSettings
     server: ServerSettings
+
+
+class WebhookConfig(BaseSettings):
+    bot: BotSettings
+    database: DatabaseSettings
+    server: ServerSettings
+    webhook: WebhookSettings

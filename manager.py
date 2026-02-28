@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 import typer
+import uvicorn
 
 manager = typer.Typer()
 logging.basicConfig(level=logging.DEBUG)
@@ -16,8 +17,20 @@ def run_telegram_bot():
 
 
 @manager.command()
-def run_workers():
-    pass
+def run_webhook():
+    from src.webhook import main
+
+    uvicorn.run(
+        "src.webhook.main:app",
+        host="0.0.0.0",  # noqa: S104
+        port=main.config.webhook.port,
+        loop="uvloop",
+        reload=main.config.webhook.reload,
+        workers=main.config.webhook.workers,
+        root_path=main.config.webhook.root_path,
+        use_colors=True,
+    )
+
 
 
 @manager.command()

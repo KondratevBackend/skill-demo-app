@@ -91,6 +91,20 @@ services:
       - worker
     !!merge <<: *logging-common
 
+  webhook:
+    container_name: webhook
+    image: telegram_bot
+    command: [ "bash", "-c", "alembic upgrade heads && python manager.py run-webhook" ]
+    volumes:
+      - .:/app
+    depends_on:
+      - database
+      - telegram-bot
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    restart: always
 
 volumes:
   telegram_bot_db_data:
