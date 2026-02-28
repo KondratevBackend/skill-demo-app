@@ -1,0 +1,9 @@
+# Only local
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --url http://webhook:8000
+
+networks:
+  default:
+    name: telegram_network
