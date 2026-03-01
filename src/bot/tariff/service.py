@@ -2,6 +2,7 @@ from aiogram import types
 
 from src.bot.subscription.service import SubscriptionService
 from src.bot.tariff.dao import BotTariffDAO
+from src.core.payment.service import PaymentService
 from src.core.server.service import ServerService
 from src.core.tariff.service import TariffService
 
@@ -13,11 +14,13 @@ class BotTariffService:
         tariff_service: TariffService,
         server_service: ServerService,
         subscription_service: SubscriptionService,
+        payment_service: PaymentService,
     ):
         self._dao = dao
         self._tariff_service = tariff_service
         self._server_service = server_service
         self._subscription_service = subscription_service
+        self._payment_service = payment_service
 
     async def give_trial_tariff(self, callback: types.CallbackQuery):
         await callback.answer("Активируем пробный тариф")
@@ -62,4 +65,7 @@ class BotTariffService:
     async def buy_tariff(self, callback: types.CallbackQuery):
         await callback.answer("Формируем платеж")
 
+        tariff_id = int(callback.data.split("tariff_select_")[-1])
+        tariff = await self._dao.get_tariff(tariff_id=tariff_id)
+        await self._payment_service.create_payment_yookassa(price=tariff.price, description=tariff.text)
         await callback.message.answer("Hello paid")

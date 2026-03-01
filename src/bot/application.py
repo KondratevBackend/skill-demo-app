@@ -8,6 +8,7 @@ from src.bot.register_handlers import RegisterHandlers
 from src.bot.storage import memory
 from src.core import database
 from src.core.config import BotConfig
+from src.core.payment.yookassa.api import YookassaAPI
 
 logger = logging.getLogger(__name__)
 
@@ -19,11 +20,13 @@ class Application:
         config: BotConfig,
         middleware: GlobalMiddleware,
         register_handlers: RegisterHandlers,
+        yookassa_api: YookassaAPI,
     ):
         self._db = db
         self._config = config
         self._register_handlers = register_handlers
         self._middleware = middleware
+        self._yookassa_api = yookassa_api
         self._dp = None
         self._bot = None
 
@@ -48,10 +51,12 @@ class Application:
 
     async def on_startup(self):
         await self.set_commands()
+        await self._yookassa_api.startup()
         logger.debug("Telegram bot started")
 
     async def on_shutdown(self):
         await self._bot.session.close()
+        await self._yookassa_api.shutdown()
         logger.debug("Telegram bot stopped")
 
     async def set_commands(self):

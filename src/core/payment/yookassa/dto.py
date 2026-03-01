@@ -45,7 +45,7 @@ class PaymentYookassaConfirmationRedirectDTO(BaseModel):
 class PaymentYookassaPayloadDTO(BaseModel):
     amount: PaymentYookassaAmountDTO
     description: Optional[str]
-    receipt: Optional[PaymentYookassaReceiptDTO]
-    metadata: PaymentYookassaMetadataDTO
+    # TODO: receipt: Optional[PaymentYookassaReceiptDTO]
+    # TODO: metadata: PaymentYookassaMetadataDTO
     capture: bool = Field(default=True, description="Автоматический прием поступившего платежа")
     confirmation: Optional[PaymentYookassaConfirmationRedirectDTO]

@@ -38,10 +38,18 @@ class WorkerBrokerSettings(pydantic.BaseModel):
     dsn: pydantic.RedisDsn
 
 
+class YookassaSettings(pydantic.BaseModel):
+    shop_id: int
+    secret_key: str
+    url: str = pydantic.Field(default="https://api.yookassa.ru/v3/")
+    success_url: str = pydantic.Field(default="https://t.me/privatka_support")
+
+
 class BotConfig(BaseSettings):
     bot: BotSettings
     database: DatabaseSettings
     server: ServerSettings
+    yookassa: YookassaSettings
 
 
 class WorkerConfig(BaseSettings):
