@@ -33,6 +33,7 @@ class BotTariffService:
                 "С любовью Приватка ❤️",
                 parse_mode="html",
             )
+            # TODO: notification admins
             return
 
         if await self._dao.exists_sub(user_id=user.id):
