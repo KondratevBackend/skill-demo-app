@@ -1,19 +1,19 @@
 """
 init models
 
-Revision ID: 2eb24700377c
+Revision ID: 9a9855a7b725
 Revises:   # noqa: UP035
-Create Date: 2026-02-24 22:34:53.461828
+Create Date: 2026-03-17 11:41:25.289008
 
 """
 
 from typing import Sequence  # noqa: UP035
 
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision: str = "2eb24700377c"
+revision: str = "9a9855a7b725"
 down_revision: str | None = None
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
@@ -62,7 +62,9 @@ def upgrade() -> None:
         sa.Column("days", sa.Integer(), nullable=False),
         sa.Column("price", sa.Float(), nullable=False),
         sa.Column("limit_ip", sa.Integer(), nullable=False),
-        sa.Column("order_index", sa.Integer(), server_default="0", nullable=False),
+        sa.Column(
+            "order_index", sa.Integer(), server_default="0", nullable=False
+        ),
         sa.Column(
             "is_trial",
             sa.Boolean(),
@@ -124,7 +126,9 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
-        sa.ForeignKeyConstraint(["server_id"], ["server.id"], name=op.f("fk_user_server_id_server")),
+        sa.ForeignKeyConstraint(
+            ["server_id"], ["server.id"], name=op.f("fk_user_server_id_server")
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_user")),
         sa.UniqueConstraint("telegram_id", name=op.f("uq_user_telegram_id")),
         sa.UniqueConstraint("xui_sub_id", name=op.f("uq_user_xui_sub_id")),
@@ -136,8 +140,12 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
-        sa.ForeignKeyConstraint(["lead_id"], ["lead.id"], name=op.f("fk_lead_user_lead_id_lead")),
-        sa.ForeignKeyConstraint(["user_id"], ["user.id"], name=op.f("fk_lead_user_user_id_user")),
+        sa.ForeignKeyConstraint(
+            ["lead_id"], ["lead.id"], name=op.f("fk_lead_user_lead_id_lead")
+        ),
+        sa.ForeignKeyConstraint(
+            ["user_id"], ["user.id"], name=op.f("fk_lead_user_user_id_user")
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_lead_user")),
         sa.UniqueConstraint("user_id", name=op.f("uq_lead_user_user_id")),
     )
@@ -150,14 +158,16 @@ def upgrade() -> None:
             sa.Enum("yookassa", name="paymentprovidertype"),
             nullable=False,
         ),
-        sa.Column("provider_payment_id", sa.String(length=256), nullable=False),
+        sa.Column(
+            "provider_payment_id", sa.String(length=256), nullable=False
+        ),
         sa.Column(
             "status",
             sa.Enum(
                 "pending",
                 "succeeded",
-                "refunded",
-                "failed",
+                "waiting_for_capture",
+                "canceled",
                 name="paymentstatustype",
             ),
             nullable=False,
@@ -174,7 +184,9 @@ def upgrade() -> None:
             ["tariff.id"],
             name=op.f("fk_payment_tariff_id_tariff"),
         ),
-        sa.ForeignKeyConstraint(["user_id"], ["user.id"], name=op.f("fk_payment_user_id_user")),
+        sa.ForeignKeyConstraint(
+            ["user_id"], ["user.id"], name=op.f("fk_payment_user_id_user")
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_payment")),
     )
     op.create_table(
@@ -194,9 +206,13 @@ def upgrade() -> None:
             ["user.id"],
             name=op.f("fk_referral_referrer_id_user"),
         ),
-        sa.ForeignKeyConstraint(["user_id"], ["user.id"], name=op.f("fk_referral_user_id_user")),
+        sa.ForeignKeyConstraint(
+            ["user_id"], ["user.id"], name=op.f("fk_referral_user_id_user")
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_referral")),
-        sa.UniqueConstraint("referrer_id", name=op.f("uq_referral_referrer_id")),
+        sa.UniqueConstraint(
+            "referrer_id", name=op.f("uq_referral_referrer_id")
+        ),
     )
     op.create_table(
         "subscription",
@@ -223,7 +239,9 @@ def upgrade() -> None:
             ["tariff.id"],
             name=op.f("fk_subscription_tariff_id_tariff"),
         ),
-        sa.ForeignKeyConstraint(["user_id"], ["user.id"], name=op.f("fk_subscription_user_id_user")),
+        sa.ForeignKeyConstraint(
+            ["user_id"], ["user.id"], name=op.f("fk_subscription_user_id_user")
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_subscription")),
     )
 
