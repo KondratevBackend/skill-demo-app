@@ -10,8 +10,8 @@ from src.core.database.models.payment.provider import PaymentProviderType
 class PaymentStatusType(StrEnum):
     pending = "pending"
     succeeded = "succeeded"
-    refunded = "refunded"
-    failed = "failed"
+    waiting_for_capture = "waiting_for_capture"
+    canceled = "canceled"
 
 
 class Payment(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
