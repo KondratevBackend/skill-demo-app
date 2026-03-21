@@ -29,6 +29,7 @@ from src.bot.tariff.handlers import BotTariffHandlers
 from src.bot.tariff.service import BotTariffService
 from src.core.config import BotConfig as Config
 from src.core.database import Database
+from src.core.payment.dao import PaymentDAO
 from src.core.payment.service import PaymentService
 from src.core.payment.yookassa.api import YookassaAPI
 from src.core.server.cookie.dao import ServerCookieDAO
@@ -241,6 +242,11 @@ def register_payment(container: punq.Container, config: Config) -> None:
         factory=PaymentService,
         scope=punq.Scope.singleton,
         config=config.yookassa,
+    )
+    container.register(
+        service=PaymentDAO,
+        factory=PaymentDAO,
+        scope=punq.Scope.singleton,
     )
     container.register(
         service=YookassaAPI,

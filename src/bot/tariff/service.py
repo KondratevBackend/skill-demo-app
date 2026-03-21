@@ -2,6 +2,7 @@ from aiogram import types
 
 from src.bot.subscription.service import SubscriptionService
 from src.bot.tariff.dao import BotTariffDAO
+from src.bot.tariff.keyboards import create_payment_keyboard
 from src.core.payment.service import PaymentService
 from src.core.server.service import ServerService
 from src.core.tariff.service import TariffService
@@ -68,5 +69,15 @@ class BotTariffService:
 
         tariff_id = int(callback.data.split("tariff_select_")[-1])
         tariff = await self._dao.get_tariff(tariff_id=tariff_id)
-        await self._payment_service.create_payment_yookassa(price=tariff.price, description=tariff.text)
-        await callback.message.answer("Hello paid")
+        user = await self._dao.get_user(telegram_id=callback.from_user.id)
+
+        payment = await self._payment_service.create_payment_yookassa(tariff=tariff, user_id=user.id)
+
+        await callback.message.answer(
+            f"<b>{tariff.text}</b>\n\n"
+            f"<b>Цена</b>: {tariff.price}\n"
+            f"<b>Срок действия:</b> {tariff.days}\n"
+            f"<b>Количество устройств:</b> {tariff.limit_ip}\n",
+            parse_mode="html",
+            reply_markup=create_payment_keyboard(payment_url=payment.confirmation.confirmation_url)
+        )

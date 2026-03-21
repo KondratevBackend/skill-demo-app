@@ -1,6 +1,9 @@
+import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
+
+from src.core.database.models import PaymentStatusType
 
 
 class PaymentYookassaAmountDTO(BaseModel):
@@ -33,12 +36,12 @@ class PaymentYookassaReceiptDTO(BaseModel):
 
 
 class PaymentYookassaMetadataDTO(BaseModel):
-    internal_payment_id: int
+    tariff_id: int
+    user_id: int
 
 
 class PaymentYookassaConfirmationRedirectDTO(BaseModel):
     type: str = Field(default="redirect")
-    locale: Optional[str] = Field(default="ru_RU")
     return_url: str
 
 
@@ -46,6 +49,33 @@ class PaymentYookassaPayloadDTO(BaseModel):
     amount: PaymentYookassaAmountDTO
     description: Optional[str]
     # TODO: receipt: Optional[PaymentYookassaReceiptDTO]
-    # TODO: metadata: PaymentYookassaMetadataDTO
+    metadata: PaymentYookassaMetadataDTO
     capture: bool = Field(default=True, description="Автоматический прием поступившего платежа")
     confirmation: Optional[PaymentYookassaConfirmationRedirectDTO]
+
+
+
+class PaymentYookassaConfirmationDTO(BaseModel):
+    type: str
+    confirmation_url: str
+
+
+class PaymentYookassaMethodDTO(BaseModel):
+    type: str
+    id: str
+    saved: bool
+
+
+class PaymentYookassaDTO(BaseModel):
+    id: str
+    amount: PaymentYookassaAmountDTO
+    status: PaymentStatusType
+    payment_method: Optional[PaymentYookassaMethodDTO] = Field(default=None)
+    metadata: PaymentYookassaMetadataDTO
+    confirmation: PaymentYookassaConfirmationDTO
+    paid: bool
+    test: bool
+    refundable: bool
+    description: Optional[str] = Field(default=None)
+    created_at: datetime.datetime
+    expires_at: Optional[datetime.datetime] = Field(default=None)

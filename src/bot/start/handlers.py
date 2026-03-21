@@ -17,4 +17,5 @@ class StartHandlers:
         @dp.callback_query(F.data == "start")
         async def start_callback_handler(callback: types.CallbackQuery, state: FSMContext):
             await callback.answer()
+            await callback.message.delete()
             await self._service.start(message=callback.message, state=state)
