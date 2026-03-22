@@ -12,6 +12,7 @@ class BotSettings(pydantic.BaseModel):
     token: str
     admins: list[int]
     support_url: pydantic.HttpUrl = pydantic.Field(default="https://t.me/privatka_support")
+    username_bot: str = pydantic.Field(default="chtyp_meteor_bot")
 
 
 class ServerSettings(pydantic.BaseModel):
