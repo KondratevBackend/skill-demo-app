@@ -6,7 +6,7 @@ from src.core.database import Base, mixins
 class Lead(Base, mixins.PrimaryKeyMixin, mixins.TimestampMixin):
     title: orm.Mapped[str] = orm.mapped_column(String(length=64), nullable=False)
     description: orm.Mapped[str] = orm.mapped_column(String(length=1024), nullable=True)
-    url_code: orm.Mapped[str] = orm.mapped_column(String(length=32), nullable=False)
+    url: orm.Mapped[str] = orm.mapped_column(String(length=32), nullable=False, unique=True)
 
     users = orm.relationship(
         "LeadUser",
