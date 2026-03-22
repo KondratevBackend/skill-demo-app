@@ -28,6 +28,11 @@ class LeadAdminHandlers:
         async def create_lead_handler(message: types.Message, state: FSMContext):
             await self._service.create_lead(message=message, state=state)
 
-        @dp.callback_query(self._is_admin_filter, F.data == "admin_list_lead")
-        async def list_lead_handler(callback: types.CallbackQuery):
+        @dp.callback_query(self._is_admin_filter, F.data.startswith("admin_list_leads_"))
+        async def list_leads_handler(callback: types.CallbackQuery):
+            """Callback содержит пагинацию admin_list_leads_{limit}:{offset}"""
+            await self._service.get_list_leads(callback=callback)
+
+        @dp.callback_query(self._is_admin_filter, F.data.startswith("admin_get_lead_"))
+        async def get_lead_handler(callback: types.CallbackQuery):
             pass

@@ -3,13 +3,15 @@ from aiogram.fsm.context import FSMContext
 
 from src.bot.admin.lead.dao import LeadAdminDAO
 from src.bot.admin.lead.fsm import CreateLeadFSM
+from src.bot.admin.lead.keyboards import LeadAdminKeyboard
 from src.bot.stop_fsm.keyboards import stop_keyboard
 from src.core.config import BotConfig
 
 
 class LeadAdminService:
-    def __init__(self, dao: LeadAdminDAO, config: BotConfig):
+    def __init__(self, dao: LeadAdminDAO, keyboard: LeadAdminKeyboard, config: BotConfig):
         self._dao = dao
+        self._keyboard = keyboard
         self._config = config
 
     async def get_title_for_lead(self, callback: types.CallbackQuery, state: FSMContext):
@@ -85,4 +87,15 @@ class LeadAdminService:
             f"Описание: {description}\n"
             f"URL: {url}",
             parse_mode="html",
+        )
+
+    async def get_list_leads(self, callback: types.CallbackQuery):
+        pagination_data = callback.data.split("_")[-1].split(":")
+        limit = int(pagination_data[0])
+        offset = int(pagination_data[1])
+
+        await callback.message.edit_text(
+            "Список рекламодателей: ",
+            parse_mode="html",
+            reply_markup=await self._keyboard.list_leads_keyboard(limit=limit, offset=offset),
         )
