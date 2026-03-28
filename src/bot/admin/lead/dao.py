@@ -37,9 +37,8 @@ class LeadAdminDAO(BaseDAO):
     async def get_count_paid_users_of_lead(self, lead_id: int) -> int:
         async for session in self._db.get_session():
             query = (
-                select(func.count())
-                .select_from(Lead)
-                .join(LeadUser, LeadUser.lead_id == Lead.id)
+                select(func.count(func.distinct(LeadUser.user_id)))
+                .select_from(LeadUser)
                 .join(User, User.id == LeadUser.user_id)
                 .join(Subscription, Subscription.user_id == User.id)
                 .join(Tariff, Tariff.id == Subscription.tariff_id)
@@ -54,9 +53,8 @@ class LeadAdminDAO(BaseDAO):
     async def get_count_trial_users_of_lead(self, lead_id: int) -> int:
         async for session in self._db.get_session():
             query = (
-                select(func.count())
-                .select_from(Lead)
-                .join(LeadUser, LeadUser.lead_id == Lead.id)
+                select(func.count(func.distinct(LeadUser.user_id)))
+                .select_from(LeadUser)
                 .join(User, User.id == LeadUser.user_id)
                 .join(Subscription, Subscription.user_id == User.id)
                 .join(Tariff, Tariff.id == Subscription.tariff_id)
