@@ -15,7 +15,7 @@ class BaseDAO:
             result = await session.execute(query)
         return result.scalars().all()
 
-    async def find_one_or_none(self, model_id: int):
+    async def get_one_or_none(self, model_id: int):
         async for session in self._db.get_session():
             query = select(self.model).where(self.model.id == model_id)
             result = await session.execute(query)

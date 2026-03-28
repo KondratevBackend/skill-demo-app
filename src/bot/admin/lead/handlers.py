@@ -35,4 +35,4 @@ class LeadAdminHandlers:
 
         @dp.callback_query(self._is_admin_filter, F.data.startswith("admin_get_lead_"))
         async def get_lead_handler(callback: types.CallbackQuery):
-            pass
+            await self._service.get_lead(callback=callback)

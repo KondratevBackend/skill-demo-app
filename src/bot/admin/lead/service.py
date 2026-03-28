@@ -99,3 +99,22 @@ class LeadAdminService:
             parse_mode="html",
             reply_markup=await self._keyboard.list_leads_keyboard(limit=limit, offset=offset),
         )
+
+    async def get_lead(self, callback: types.CallbackQuery):
+        await callback.answer("Ищу рекламодателя...")
+        lead_id = int(callback.data.split("_")[-1])
+
+        lead = await self._dao.get_lead(lead_id=lead_id)
+
+        await callback.message.answer(
+            f"<b>Рекламодатель</b> {lead.created_at.strftime('%d.%m.%Y')}\n\n"
+            f"<b>Название</b>: {lead.title}\n"
+            f"<b>Описание</b>: {lead.description}\n"
+            f"<b>URL</b>: {lead.url}\n"
+            f"{'-'*50}\n"
+            f"<b>Статистика</b>\n\n"
+            f"<b>Старт</b>: {len(lead.users)}\n"
+            f"<b>Пробных</b>: {await self._dao.get_count_trial_users_of_lead(lead_id=lead_id)}\n"
+            f"<b>Платных</b>: {await self._dao.get_count_paid_users_of_lead(lead_id=lead_id)}\n",
+            parse_mode="html",
+        )
