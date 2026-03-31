@@ -12,5 +12,5 @@ is_verified_user_in_feedback_keyboard = types.InlineKeyboardMarkup(
     inline_keyboard=[
         [types.InlineKeyboardButton(text="Да", callback_data="admin_create_feedback_verified_user:true")],
         [types.InlineKeyboardButton(text="Нет", callback_data="admin_create_feedback_verified_user:false")],
-    ]
+    ],
 )

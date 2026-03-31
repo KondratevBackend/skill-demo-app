@@ -2,7 +2,7 @@ from aiogram.types import User as TelegramUser
 from sqlalchemy import desc, exists, select
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import Tariff, User, Lead, LeadUser
+from src.core.database.models import Lead, LeadUser, Tariff, User
 
 
 class StartDAO(BaseDAO):
@@ -25,10 +25,7 @@ class StartDAO(BaseDAO):
 
     async def get_lead_id_by_url_code(self, url_code: str) -> int | None:
         async for session in self._db.get_session():
-            query = (
-                select(Lead.id)
-                .where(Lead.url.ilike(f"%{url_code}%"))
-            )
+            query = select(Lead.id).where(Lead.url.ilike(f"%{url_code}%"))
             result = await session.execute(query)
         return result.scalar_one_or_none()
 

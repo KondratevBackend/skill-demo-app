@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, types, F
+from aiogram import Dispatcher, F, types
 from aiogram.fsm.context import FSMContext
 
 from src.bot.admin.filters import IsAdminFilter

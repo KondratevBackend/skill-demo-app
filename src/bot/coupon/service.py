@@ -8,7 +8,6 @@ from src.bot.coupon.fsm import CouponFSM
 from src.bot.support.keyboards import SupportKeyboards
 from src.core.tariff.service import TariffService
 
-
 NOT_FOUND_COUPON_MESSAGES = [
     "❌ Купон не найден",
     "Не нашёл такой купон 👀\nВозможно, опечатка?",
@@ -41,8 +40,7 @@ class CouponService:
             coupon = await self._dao.get_coupon(code=coupon_code)
             if not coupon:
                 await message.answer(
-                    f"{random.choice(NOT_FOUND_COUPON_MESSAGES)}\n\n"
-                    f"<b>Введи код ещё раз:</b>",
+                    f"{random.choice(NOT_FOUND_COUPON_MESSAGES)}\n\n" f"<b>Введи код ещё раз:</b>",
                     parse_mode="html",
                 )
                 return
@@ -60,9 +58,8 @@ class CouponService:
             )
         except Exception as e:
             await message.answer(
-                "⚠️ Возникла техническая ошибка\n\n"
-                "Пожалуйста, напиши в поддержку — мы разберёмся 👨‍🔧",
+                "⚠️ Возникла техническая ошибка\n\n" "Пожалуйста, напиши в поддержку — мы разберёмся 👨‍🔧",
                 parse_mode="html",
-                reply_markup=self._support_keyboards.support_keyboard()
+                reply_markup=self._support_keyboards.support_keyboard(),
             )
             raise e

@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, types, F
+from aiogram import Dispatcher, F, types
 
 from src.bot.lk.service import LKService
 from src.core.consts import LK_BUTTON_TEXT

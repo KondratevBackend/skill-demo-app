@@ -16,7 +16,7 @@ class CouponAdminService:
         await callback.message.answer(
             "Выбери тариф для которого создать купон: ",
             parse_mode="html",
-            reply_markup=await self._keyboard.tariffs_keyboard()
+            reply_markup=await self._keyboard.tariffs_keyboard(),
         )
 
     async def create_coupon(self, callback: types.CallbackQuery):
@@ -25,8 +25,7 @@ class CouponAdminService:
         tariff = await self._dao.get_tariff(tariff_id=tariff_id)
         if not tariff:
             await callback.message.answer(
-                "⚠️<b>WARNING!</b>⚠️\n\n"
-                "Техническая ошибка. Такой тариф не был найден в системе",
+                "⚠️<b>WARNING!</b>⚠️\n\n" "Техническая ошибка. Такой тариф не был найден в системе",
                 parse_mode="html",
             )
             raise NotFoundError(f"No rate found when generating a coupon (id={tariff_id})")
@@ -37,5 +36,5 @@ class CouponAdminService:
         await callback.message.edit_text(
             f"Сгенерированный купон:\n\n<code>{code}</code>",
             parse_mode="html",
-            reply_markup=self._keyboard.create_another_coupon_keyboard()
+            reply_markup=self._keyboard.create_another_coupon_keyboard(),
         )

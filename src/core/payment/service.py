@@ -5,7 +5,7 @@ from src.core.config import YookassaSettings
 from src.core.database.models import Tariff
 from src.core.payment.dao import PaymentDAO
 from src.core.payment.yookassa.api import YookassaAPI
-from src.core.payment.yookassa.dto import PaymentYookassaPayloadDTO, PaymentYookassaDTO
+from src.core.payment.yookassa.dto import PaymentYookassaDTO, PaymentYookassaPayloadDTO
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class PaymentService:
             metadata={
                 "tariff_id": tariff.id,
                 "user_id": user_id,
-            }
+            },
         )
         payment = await self._yookassa_api.create_payment(payload=payload, idempotency_key=idempotency_key)
 

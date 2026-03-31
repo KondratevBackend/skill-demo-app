@@ -21,8 +21,7 @@ class LeadAdminService:
     async def get_description_for_lead(self, message: types.Message, state: FSMContext):
         if len(message.text) > 64:
             await message.answer(
-                f"Длина названия не может превышать 64 символа у тебя {len(message.text)}\n\n"
-                f"Введи название: ",
+                f"Длина названия не может превышать 64 символа у тебя {len(message.text)}\n\n" f"Введи название: ",
                 reply_markup=stop_keyboard,
             )
             return
@@ -30,16 +29,14 @@ class LeadAdminService:
         await state.update_data(title=message.text)
         await state.set_state(CreateLeadFSM.get_description)
         await message.answer(
-            "Введи описание рекламодателя:\n\n"
-            "copy: <code>Отсутствует</code>",
+            "Введи описание рекламодателя:\n\n" "copy: <code>Отсутствует</code>",
             parse_mode="html",
         )
 
     async def get_url_code_for_lead(self, message: types.Message, state: FSMContext):
         if len(message.text) > 1024:
             await message.answer(
-                f"Длина описания не может превышать 1024 символа у тебя {len(message.text)}!\n\n"
-                f"Введи описание: ",
+                f"Длина описания не может превышать 1024 символа у тебя {len(message.text)}!\n\n" f"Введи описание: ",
                 reply_markup=stop_keyboard,
             )
             return
@@ -52,15 +49,13 @@ class LeadAdminService:
         url_code = message.text
         if len(url_code) > 32:
             await message.answer(
-                f"Длина URL-а не может превышать 32 символа у тебя {len(message.text)}!\n\n"
-                f"Введи код URL-а: ",
+                f"Длина URL-а не может превышать 32 символа у тебя {len(message.text)}!\n\n" f"Введи код URL-а: ",
                 reply_markup=stop_keyboard,
             )
             return
         elif not url_code.isascii() or not url_code.isalpha():
             await message.answer(
-                f"URL код может содержать только латиницу!\n\n"
-                f"Введи код URL-а: ",
+                f"URL код может содержать только латиницу!\n\n" f"Введи код URL-а: ",
                 reply_markup=stop_keyboard,
             )
             return
@@ -71,21 +66,14 @@ class LeadAdminService:
         url = f"https://t.me/{self._config.bot.username_bot}?start={url_code}"
 
         if await self._dao.exists_lead(url=url):
-            await message.answer(
-                f"Такая ссылка уже существует!\n"
-                f"URL: {url}\n\n"
-                f"Введи код URL-а: "
-            )
+            await message.answer(f"Такая ссылка уже существует!\n" f"URL: {url}\n\n" f"Введи код URL-а: ")
             return
 
         await self._dao.create_lead(title=title, description=description, url=url)
 
         await state.clear()
         await message.answer(
-            f"<b>Рекламодатель создан</b>\n\n"
-            f"Название: {title}\n"
-            f"Описание: {description}\n"
-            f"URL: {url}",
+            f"<b>Рекламодатель создан</b>\n\n" f"Название: {title}\n" f"Описание: {description}\n" f"URL: {url}",
             parse_mode="html",
         )
 

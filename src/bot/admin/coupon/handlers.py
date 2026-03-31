@@ -17,4 +17,3 @@ class CouponAdminHandlers:
         @dp.callback_query(self._is_admin_filter, F.data.startswith("admin_create_coupon:"))
         async def create_coupon_handler(callback: types.CallbackQuery):
             await self._service.create_coupon(callback=callback)
-

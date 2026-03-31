@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete
+from sqlalchemy import delete, select
 from sqlalchemy.orm import joinedload
 
 from src.core.database.dao import BaseDAO
@@ -14,11 +14,7 @@ class CouponDAO(BaseDAO):
 
     async def get_coupon(self, code: str) -> Coupon:
         async for session in self._db.get_session():
-            query = (
-                select(Coupon)
-                .options(joinedload(Coupon.tariff))
-                .where(Coupon.code == code)
-            )
+            query = select(Coupon).options(joinedload(Coupon.tariff)).where(Coupon.code == code)
             result = await session.execute(query)
         return result.scalar_one_or_none()
 

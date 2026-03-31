@@ -1,8 +1,8 @@
-from sqlalchemy import select, exists, func
+from sqlalchemy import exists, func, select
 from sqlalchemy.orm import joinedload
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import Lead, LeadUser, User, Subscription, Tariff
+from src.core.database.models import Lead, LeadUser, Subscription, Tariff, User
 
 
 class LeadAdminDAO(BaseDAO):
@@ -14,11 +14,7 @@ class LeadAdminDAO(BaseDAO):
 
     async def get_lead(self, lead_id: int) -> Lead:
         async for session in self._db.get_session():
-            query = (
-                select(Lead)
-                .options(joinedload(Lead.users))
-                .where(Lead.id == lead_id)
-            )
+            query = select(Lead).options(joinedload(Lead.users)).where(Lead.id == lead_id)
             result = await session.execute(query)
         return result.scalars().unique().one()
 

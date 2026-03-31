@@ -79,5 +79,5 @@ class BotTariffService:
             f"<b>Срок действия:</b> {tariff.days}\n"
             f"<b>Количество устройств:</b> {tariff.limit_ip}\n",
             parse_mode="html",
-            reply_markup=create_payment_keyboard(payment_url=payment.confirmation.confirmation_url)
+            reply_markup=create_payment_keyboard(payment_url=payment.confirmation.confirmation_url),
         )

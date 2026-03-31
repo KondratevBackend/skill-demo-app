@@ -54,7 +54,6 @@ class PaymentYookassaPayloadDTO(BaseModel):
     confirmation: Optional[PaymentYookassaConfirmationRedirectDTO]
 
 
-
 class PaymentYookassaConfirmationDTO(BaseModel):
     type: str
     confirmation_url: str

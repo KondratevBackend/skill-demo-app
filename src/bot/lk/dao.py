@@ -1,4 +1,4 @@
-from sqlalchemy import select, or_
+from sqlalchemy import or_, select
 from sqlalchemy.orm import joinedload
 
 from src.core.database.dao import BaseDAO
@@ -18,8 +18,8 @@ class LKDAO(BaseDAO):
                 select(Subscription)
                 .options(joinedload(Subscription.tariff))
                 .where(
-                Subscription.user_id == user_id,
-                Subscription.status == SubscriptionStatusType.pending,
+                    Subscription.user_id == user_id,
+                    Subscription.status == SubscriptionStatusType.pending,
                 )
             )
             result = await session.execute(query)
@@ -31,8 +31,8 @@ class LKDAO(BaseDAO):
                 select(Subscription)
                 .options(joinedload(Subscription.tariff))
                 .where(
-                Subscription.user_id == user_id,
-                Subscription.status == SubscriptionStatusType.active,
+                    Subscription.user_id == user_id,
+                    Subscription.status == SubscriptionStatusType.active,
                 )
             )
             result = await session.execute(query)

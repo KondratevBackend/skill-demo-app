@@ -21,9 +21,6 @@ class CouponAdminKeyboards:
         return types.InlineKeyboardMarkup(
             row_width=1,
             inline_keyboard=[
-                [
-                    types.InlineKeyboardButton(text="Создать ещё купон", callback_data=f"admin_create_coupon")
-                ]
-            ]
+                [types.InlineKeyboardButton(text="Создать ещё купон", callback_data=f"admin_create_coupon")]
+            ],
         )
-

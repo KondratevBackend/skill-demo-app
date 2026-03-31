@@ -2,7 +2,7 @@ import datetime
 
 from pytils import numeral
 
-from src.bot.lk.dto import TimeDTO, HumanizeTimeDTO
+from src.bot.lk.dto import HumanizeTimeDTO, TimeDTO
 
 
 def get_time_until_expiration(date_of_expiration: datetime.datetime) -> TimeDTO:

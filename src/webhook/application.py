@@ -3,8 +3,7 @@ from contextlib import asynccontextmanager
 import fastapi
 
 from src.core.database import Database
-from src.webhook import health_checks
-from src.webhook import yookassa
+from src.webhook import health_checks, yookassa
 
 
 class Application:

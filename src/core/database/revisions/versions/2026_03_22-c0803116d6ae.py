@@ -9,8 +9,8 @@ Create Date: 2026-03-22 09:47:09.325586
 
 from typing import Sequence  # noqa: UP035
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "c0803116d6ae"
@@ -20,9 +20,7 @@ depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:
-    op.add_column(
-        "lead", sa.Column("url", sa.String(length=32), nullable=False)
-    )
+    op.add_column("lead", sa.Column("url", sa.String(length=32), nullable=False))
     op.create_unique_constraint(op.f("uq_lead_url"), "lead", ["url"])
     op.drop_column("lead", "url_code")
 

@@ -106,18 +106,12 @@ class FeedbackAdminService:
 
     async def create_feedback(self, message: types.Message, state: FSMContext):
         if not message.text.isdigit():
-            await message.answer(
-                "Оценка должна быть строго целым числом\n\n"
-                "Введи оценку (от 1 до 5): "
-            )
+            await message.answer("Оценка должна быть строго целым числом\n\n" "Введи оценку (от 1 до 5): ")
             return
 
         rating = int(message.text)
         if 0 >= rating > 5:
-            await message.answer(
-                "Оценка должна быть от 1 до 5\n\n"
-                "Введи оценку (от 1 до 5): "
-            )
+            await message.answer("Оценка должна быть от 1 до 5\n\n" "Введи оценку (от 1 до 5): ")
             return
 
         state_data = await state.get_data()
@@ -147,7 +141,5 @@ class FeedbackAdminService:
             f"{flaws_msg}"
             f"{comment_msg}"
             f"\n```",
-            parse_mode="html"
+            parse_mode="html",
         )
-
-

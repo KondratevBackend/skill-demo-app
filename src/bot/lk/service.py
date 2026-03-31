@@ -4,7 +4,7 @@ from aiogram import types
 
 from src.bot.lk.dao import LKDAO
 from src.bot.lk.dto import HumanizeTimeDTO
-from src.bot.lk.utils import humanize_time, get_time_until_expiration
+from src.bot.lk.utils import get_time_until_expiration, humanize_time
 from src.core.database.models import Subscription
 
 
@@ -34,10 +34,7 @@ class LKService:
                 f"<code>{total_subscriptions_duration.show()}</code>"
             )
 
-        await message.answer(
-            text=msg_text,
-            parse_mode="html"
-        )
+        await message.answer(text=msg_text, parse_mode="html")
 
     async def get_total_subscriptions_duration(
         self,

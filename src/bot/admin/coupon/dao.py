@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import Tariff, Coupon
+from src.core.database.models import Coupon, Tariff
 
 
 class CouponAdminDAO(BaseDAO):

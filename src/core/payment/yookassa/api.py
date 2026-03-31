@@ -4,7 +4,7 @@ from aiohttp import helpers
 
 from src.core.api import API
 from src.core.config import YookassaSettings
-from src.core.payment.yookassa.dto import PaymentYookassaPayloadDTO, PaymentYookassaDTO
+from src.core.payment.yookassa.dto import PaymentYookassaDTO, PaymentYookassaPayloadDTO
 
 
 class YookassaAPI(API):
@@ -18,22 +18,17 @@ class YookassaAPI(API):
     def prepare_request_headers(self):
         return {
             "Content-Type": "application/json",
-            "Authorization": helpers.BasicAuth(
-                str(self.__shop_id),
-                self.__secret_key
-            ).encode(),
+            "Authorization": helpers.BasicAuth(str(self.__shop_id), self.__secret_key).encode(),
             **self.default_headers,
         }
 
-    async def create_payment(self, payload: PaymentYookassaPayloadDTO, idempotency_key: uuid.UUID) -> PaymentYookassaDTO:
+    async def create_payment(
+        self, payload: PaymentYookassaPayloadDTO, idempotency_key: uuid.UUID
+    ) -> PaymentYookassaDTO:
         url = f"payments"
         payload_dict: dict = payload.model_dump()
         print(payload_dict)
-        self._headers.update(
-            {
-                "Idempotence-Key": str(idempotency_key)
-            }
-        )
+        self._headers.update({"Idempotence-Key": str(idempotency_key)})
 
         response = await self._session.post(url, json=payload_dict, headers=self._headers)
         if response.ok:

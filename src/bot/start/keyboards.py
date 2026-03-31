@@ -49,6 +49,6 @@ class StartKeyboard:
                 ]
             )
 
-        inline_keyboard.append([types.InlineKeyboardButton(text="Активировать купон",callback_data="coupon")])
+        inline_keyboard.append([types.InlineKeyboardButton(text="Активировать купон", callback_data="coupon")])
 
         return types.InlineKeyboardMarkup(row_width=1, inline_keyboard=inline_keyboard)
