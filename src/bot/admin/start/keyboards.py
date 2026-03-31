@@ -17,5 +17,8 @@ start_admin_keyboard = InlineKeyboardMarkup(
                 callback_data=f"admin_list_leads_{consts.PAGINATION_LIMIT_ADMIN_LIST_LEADS}:{consts.PAGINATION_OFFSET_ADMIN_LIST_LEADS}",
             ),
         ],
+        [
+          InlineKeyboardButton(text="Создать отзыв",callback_data="admin_create_feedback")
+        ],
     ],
 )

@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher
 
 from src.bot.admin.coupon.handlers import CouponAdminHandlers
+from src.bot.admin.feedback.handlers import FeedbackAdminHandlers
 from src.bot.admin.lead.handlers import LeadAdminHandlers
 from src.bot.admin.start.handlers import StartAdminHandlers
 from src.bot.coupon.handlers import CouponHandlers
@@ -21,6 +22,7 @@ class RegisterHandlers:
         start_admin_handlers: StartAdminHandlers,
         coupon_admin_handlers: CouponAdminHandlers,
         lead_admin_handlers: LeadAdminHandlers,
+        feedback_admin_handlers: FeedbackAdminHandlers,
     ):
         self._stop_fsm_handlers = stop_fsm_handlers
         self._start_handlers = start_handlers
@@ -32,6 +34,7 @@ class RegisterHandlers:
         self._start_admin_handlers = start_admin_handlers
         self._coupon_admin_handlers = coupon_admin_handlers
         self._lead_admin_handlers = lead_admin_handlers
+        self._feedback_admin_handlers = feedback_admin_handlers
 
     def set(self, dp: Dispatcher, bot: Bot):
         self._stop_fsm_handlers.register_handlers(dp)
@@ -44,3 +47,4 @@ class RegisterHandlers:
         self._start_admin_handlers.register_handlers(dp)
         self._coupon_admin_handlers.register_handlers(dp)
         self._lead_admin_handlers.register_handlers(dp)
+        self._feedback_admin_handlers.register_handlers(dp)

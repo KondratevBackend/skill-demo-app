@@ -4,6 +4,9 @@ from src.bot.admin.coupon.dao import CouponAdminDAO
 from src.bot.admin.coupon.handlers import CouponAdminHandlers
 from src.bot.admin.coupon.keyboards import CouponAdminKeyboards
 from src.bot.admin.coupon.service import CouponAdminService
+from src.bot.admin.feedback.dao import FeedbackAdminDAO
+from src.bot.admin.feedback.handlers import FeedbackAdminHandlers
+from src.bot.admin.feedback.service import FeedbackAdminService
 from src.bot.admin.filters import IsAdminFilter
 from src.bot.admin.lead.dao import LeadAdminDAO
 from src.bot.admin.lead.handlers import LeadAdminHandlers
@@ -216,6 +219,21 @@ def register_admin(container: punq.Container, config: Config) -> None:
     container.register(
         service=LeadAdminKeyboard,
         factory=LeadAdminKeyboard,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=FeedbackAdminDAO,
+        factory=FeedbackAdminDAO,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=FeedbackAdminService,
+        factory=FeedbackAdminService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=FeedbackAdminHandlers,
+        factory=FeedbackAdminHandlers,
         scope=punq.Scope.singleton,
     )
 
