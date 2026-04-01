@@ -5,6 +5,7 @@ from src.bot.admin.feedback.handlers import FeedbackAdminHandlers
 from src.bot.admin.lead.handlers import LeadAdminHandlers
 from src.bot.admin.start.handlers import StartAdminHandlers
 from src.bot.coupon.handlers import CouponHandlers
+from src.bot.feedback.handlers import FeedbackHandlers
 from src.bot.lk.handlers import LKHandlers
 from src.bot.start.handlers import StartHandlers
 from src.bot.stop_fsm.handlers import StopFSMHandlers
@@ -19,6 +20,7 @@ class RegisterHandlers:
         tariff_handlers: BotTariffHandlers,
         coupon_handlers: CouponHandlers,
         lk_handlers: LKHandlers,
+        feedback_handlers: FeedbackHandlers,
         start_admin_handlers: StartAdminHandlers,
         coupon_admin_handlers: CouponAdminHandlers,
         lead_admin_handlers: LeadAdminHandlers,
@@ -29,6 +31,7 @@ class RegisterHandlers:
         self._tariff_handlers = tariff_handlers
         self._coupon_handlers = coupon_handlers
         self._lk_handlers = lk_handlers
+        self._feedback_handlers = feedback_handlers
 
         # admin
         self._start_admin_handlers = start_admin_handlers
@@ -42,6 +45,7 @@ class RegisterHandlers:
         self._tariff_handlers.register_handlers(dp)
         self._coupon_handlers.register_handlers(dp)
         self._lk_handlers.register_handlers(dp)
+        self._feedback_handlers.register_handlers(dp)
 
         # admin
         self._start_admin_handlers.register_handlers(dp)

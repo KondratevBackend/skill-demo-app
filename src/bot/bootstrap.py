@@ -17,6 +17,9 @@ from src.bot.admin.start.service import StartAdminService
 from src.bot.coupon.dao import CouponDAO
 from src.bot.coupon.handlers import CouponHandlers
 from src.bot.coupon.service import CouponService
+from src.bot.feedback.dao import FeedbackDAO
+from src.bot.feedback.handlers import FeedbackHandlers
+from src.bot.feedback.service import FeedbackService
 from src.bot.lk.dao import LKDAO
 from src.bot.lk.handlers import LKHandlers
 from src.bot.lk.service import LKService
@@ -152,6 +155,21 @@ def resolve_resources(config: Config) -> punq.Container:
     container.register(
         service=LKDAO,
         factory=LKDAO,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=FeedbackHandlers,
+        factory=FeedbackHandlers,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=FeedbackService,
+        factory=FeedbackService,
+        scope=punq.Scope.singleton,
+    )
+    container.register(
+        service=FeedbackDAO,
+        factory=FeedbackDAO,
         scope=punq.Scope.singleton,
     )
 
