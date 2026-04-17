@@ -42,6 +42,7 @@ from src.core.database import Database
 from src.core.payment.dao import PaymentDAO
 from src.core.payment.service import PaymentService
 from src.core.payment.yookassa.api import YookassaAPI
+from src.core.redis import Redis
 from src.core.server.cookie.dao import ServerCookieDAO
 from src.core.server.cookie.service import ServerCookieService
 from src.core.server.dao import ServerDAO
@@ -58,6 +59,12 @@ def resolve_resources(config: Config) -> punq.Container:
         factory=Database,
         scope=punq.Scope.singleton,
         config=config.database,
+    )
+    container.register(
+        service=Redis,
+        factory=Redis,
+        scope=punq.Scope.singleton,
+        config=config.redis,
     )
     container.register(
         service=GlobalMiddleware,

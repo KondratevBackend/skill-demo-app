@@ -3,12 +3,14 @@ from aiogram import types
 from src.bot.feedback.dao import FeedbackDAO
 from src.bot.feedback.keyboards import feedback_keyboard
 from src.bot.support.keyboards import SupportKeyboards
+from src.core.redis import Redis
 
 
 class FeedbackService:
-    def __init__(self, dao: FeedbackDAO, support_keyboards: SupportKeyboards):
+    def __init__(self, dao: FeedbackDAO, support_keyboards: SupportKeyboards, redis: Redis):
         self._dao = dao
         self._support_keyboards = support_keyboards
+        self._redis = redis
 
     async def msg_how_leave_review(self, message: types.Message):
         await message.answer(

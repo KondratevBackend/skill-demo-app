@@ -28,6 +28,10 @@ class DatabaseSettings(pydantic.BaseModel):
     engine_pool_timeout: int = pydantic.Field(default=30)
 
 
+class RedisSettings(pydantic.BaseModel):
+    dsn: pydantic.RedisDsn
+
+
 class WebhookSettings(pydantic.BaseModel):
     port: int = pydantic.Field(default=8000)
     reload: bool = pydantic.Field(default=False)
@@ -51,6 +55,7 @@ class BotConfig(BaseSettings):
     database: DatabaseSettings
     server: ServerSettings
     yookassa: YookassaSettings
+    redis: RedisSettings
 
 
 class WorkerConfig(BaseSettings):
