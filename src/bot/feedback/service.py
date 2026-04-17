@@ -1,3 +1,5 @@
+import json
+
 from aiogram import types
 
 from src.bot.feedback.dao import FeedbackDAO
@@ -23,7 +25,24 @@ class FeedbackService:
         )
 
     async def get_feedback(self, message: types.Message, edit_text: bool = False):
-        feedback = await self._dao.get_random_feedback()
+        prefix_key = "client_feedback"
+        raw = await self._redis.redis.get(f"{prefix_key}:{message.from_user.id}")
+        seen_feedbacks_ids: list[int] = json.loads(raw) if raw else []
+
+        feedback = await self._dao.get_random_feedback(without_ids=seen_feedbacks_ids)
+
+        if feedback is None:
+            async for key in self._redis.redis.scan_iter(f"{prefix_key}:*"):
+                await self._redis.redis.delete(key)
+
+            feedback = await self._dao.get_random_feedback()
+
+        seen_feedbacks_ids.append(feedback.id)
+        await self._redis.redis.set(
+            name=f"{prefix_key}:{message.from_user.id}",
+            value=json.dumps(seen_feedbacks_ids),
+            ex=60*20,  # 20 min
+        )
 
         name_msg = feedback.user_name if feedback.user_name else "Покупатель Приватка-VPN"
         rating_msg = feedback.rating * "<tg-emoji emoji-id='5438496463044752972'>⭐️</tg-emoji>"
