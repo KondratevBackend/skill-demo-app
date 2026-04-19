@@ -32,7 +32,6 @@ class YookassaAPI(API):
         response = await self._session.post(url, json=payload_dict, headers=self._headers)
         if response.ok:
             result = await response.json()
-            print(result)
             return PaymentYookassaDTO(**result)
 
         response.raise_for_status()
