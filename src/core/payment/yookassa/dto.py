@@ -71,7 +71,7 @@ class PaymentYookassaDTO(BaseModel):
     status: PaymentStatusType
     payment_method: Optional[PaymentYookassaMethodDTO] = Field(default=None)
     metadata: PaymentYookassaMetadataDTO
-    confirmation: PaymentYookassaConfirmationDTO
+    confirmation: Optional[PaymentYookassaConfirmationDTO] = Field(default=None)
     paid: bool
     test: bool
     refundable: bool
