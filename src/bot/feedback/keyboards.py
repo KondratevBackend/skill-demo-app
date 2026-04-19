@@ -10,5 +10,5 @@ feedback_keyboard = types.InlineKeyboardMarkup(
                 icon_custom_emoji_id="5416117059207572332",
             ),
         ]
-    ]
+    ],
 )

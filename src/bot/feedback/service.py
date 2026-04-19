@@ -41,7 +41,7 @@ class FeedbackService:
         await self._redis.redis.set(
             name=f"{prefix_key}:{message.from_user.id}",
             value=json.dumps(seen_feedbacks_ids),
-            ex=60*20,  # 20 min
+            ex=60 * 20,  # 20 min
         )
 
         name_msg = feedback.user_name if feedback.user_name else "Покупатель Приватка-VPN"
@@ -51,12 +51,7 @@ class FeedbackService:
         flaws_msg = f"\n<i>Недостатки</i>: {feedback.flaws}" if feedback.flaws else ""
         comment_msg = f"\n<i>Комментарий</i>: {feedback.comment}" if feedback.comment else ""
 
-        text_msg = (
-            f"{name_msg}{verified_msg}  {rating_msg}\n"
-            f"{advantages_msg}"
-            f"{flaws_msg}"
-            f"{comment_msg}"
-        )
+        text_msg = f"{name_msg}{verified_msg}  {rating_msg}\n" f"{advantages_msg}" f"{flaws_msg}" f"{comment_msg}"
 
         if edit_text:
             await message.edit_text(
@@ -70,4 +65,3 @@ class FeedbackService:
                 parse_mode="html",
                 reply_markup=feedback_keyboard,
             )
-

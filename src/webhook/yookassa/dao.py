@@ -1,7 +1,7 @@
 from sqlalchemy import select, update
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import PaymentStatusType, Payment, PaymentProviderType, User, Tariff
+from src.core.database.models import Payment, PaymentProviderType, PaymentStatusType, Tariff, User
 
 
 class YookassaDAO(BaseDAO):
@@ -19,9 +19,13 @@ class YookassaDAO(BaseDAO):
 
     async def update_payment_status(self, status: PaymentStatusType, provider_payment_id: str):
         async for session in self._db.get_session():
-            query = update(Payment).values(status=status).where(
-                Payment.provider_payment_id == provider_payment_id,
-                Payment.provider == PaymentProviderType.yookassa,
+            query = (
+                update(Payment)
+                .values(status=status)
+                .where(
+                    Payment.provider_payment_id == provider_payment_id,
+                    Payment.provider == PaymentProviderType.yookassa,
+                )
             )
             await session.execute(query)
             await session.commit()

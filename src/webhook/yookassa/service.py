@@ -9,29 +9,23 @@ from src.core.tariff.service import TariffService
 from src.webhook.yookassa.dao import YookassaDAO
 from src.webhook.yookassa.dto import WebhookNotificationDTO
 
-
 logger = logging.getLogger(__name__)
 
 
 class YookassaService:
-    def __init__(
-        self,
-        dao: YookassaDAO,
-        tariff_service: TariffService,
-        config: WebhookConfig
-    ):
+    def __init__(self, dao: YookassaDAO, tariff_service: TariffService, config: WebhookConfig):
         self._dao = dao
         self._tariff_service = tariff_service
         self._config = config
 
     async def process(self, notification: WebhookNotificationDTO) -> bool:
-        event: PaymentStatusType = self.__parse_event(notification)
+        status_event: PaymentStatusType = self.__parse_event(notification)
 
-        if event == PaymentStatusType.succeeded:
+        if status_event == PaymentStatusType.succeeded:
             await self.handle_event_succeeded(payment=notification.object)
-        elif event == PaymentStatusType.waiting_for_capture:
+        elif status_event == PaymentStatusType.waiting_for_capture:
             await self.handle_event_waiting_for_capture(payment=notification.object)
-        elif event == PaymentStatusType.canceled:
+        elif status_event == PaymentStatusType.canceled:
             await self.handle_event_canceled(payment=notification.object)
         else:
             logger.warning(f"Unknown payment status: {event}")
@@ -52,11 +46,7 @@ class YookassaService:
             f"Yupiii {emoji_firework * 3}\n"
             f"Тариф {tariff.text} успешно активирован <tg-emoji emoji-id='5197288647275071607'>🛡</tg-emoji>\n\n"
         )
-        await bot.send_message(
-            chat_id=user.telegram_id,
-            text=success_text,
-            parse_mode="html"
-        )
+        await bot.send_message(chat_id=user.telegram_id, text=success_text, parse_mode="html")
 
     async def handle_event_waiting_for_capture(self, payment: PaymentYookassaDTO):
         await self._dao.update_payment_status(status=payment.status, provider_payment_id=payment.id)

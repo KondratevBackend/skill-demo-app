@@ -1,4 +1,4 @@
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 
 from src.core.database.dao import BaseDAO
 from src.core.database.models import Feedback
