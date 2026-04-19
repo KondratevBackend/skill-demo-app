@@ -28,7 +28,7 @@ class YookassaService:
         elif status_event == PaymentStatusType.canceled:
             await self.handle_event_canceled(payment=notification.object)
         else:
-            logger.warning(f"Unknown payment status: {event}")
+            logger.warning(f"Unknown payment status: {status_event}")
 
         return True
 
