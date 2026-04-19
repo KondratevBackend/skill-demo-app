@@ -27,7 +27,6 @@ class YookassaAPI(API):
     ) -> PaymentYookassaDTO:
         url = f"payments"
         payload_dict: dict = payload.model_dump()
-        print(payload_dict)
         self._headers.update({"Idempotence-Key": str(idempotency_key)})
 
         response = await self._session.post(url, json=payload_dict, headers=self._headers)

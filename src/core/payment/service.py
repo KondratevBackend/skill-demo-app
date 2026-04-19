@@ -33,6 +33,7 @@ class PaymentService:
             },
         )
         payment = await self._yookassa_api.create_payment(payload=payload, idempotency_key=idempotency_key)
+        await self._dao.create_payment_yookassa(payment=payment)
 
         logger.debug(f"Created payment yookassa for {user_id=}")
 

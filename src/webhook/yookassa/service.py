@@ -41,9 +41,12 @@ class YookassaService:
     async def handle_event_succeeded(self, payment: PaymentYookassaDTO):
         user, tariff = await asyncio.gather(
             self._dao.get_user(user_id=payment.metadata.user_id),
-            self._dao.get_tariff(tariff_id=payment.metadata.tariff_id)
+            self._dao.get_tariff(tariff_id=payment.metadata.tariff_id),
         )
-        await self._tariff_service.issue_tariff(user=user, tariff=tariff)
+        await asyncio.gather(
+            self._tariff_service.issue_tariff(user=user, tariff=tariff),
+            self._dao.update_payment_status(status=payment.status, provider_payment_id=payment.id),
+        )
         emoji_firework = "<tg-emoji emoji-id='5193018401810822951'>🎉</tg-emoji>"
         success_text = (
             f"Yupiii {emoji_firework * 3}\n"
