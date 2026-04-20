@@ -126,7 +126,7 @@ class FeedbackAdminService:
             comment=state_data.get("comment", None),
         )
 
-        name_msg = feedback.user_name if feedback.user_name else "Покупатель Приватка-VPN"
+        name_msg = feedback.user_name if feedback.user_name else "Покупатель YourApp"
         rating_msg = feedback.rating * "⭐️"
         verified_msg = "✅" if feedback.is_verified_user else ""
         advantages_msg = f"\n<i>Достоинства</i>: {feedback.advantages}" if feedback.advantages else ""

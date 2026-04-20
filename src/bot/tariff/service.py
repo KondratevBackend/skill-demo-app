@@ -31,7 +31,7 @@ class BotTariffService:
             await callback.message.answer(
                 "Сейчас наблюдается высокая нагрузка — <b>все серверы временно переполнены</b>\n\n"
                 "Команда уже занимается этим вопросом 💪\n\n"
-                "С любовью Приватка ❤️",
+                "С любовью YourApp ❤️",
                 parse_mode="html",
             )
             # TODO: notification admins

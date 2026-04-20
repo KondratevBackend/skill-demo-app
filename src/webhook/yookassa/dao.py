@@ -1,7 +1,8 @@
-from sqlalchemy import select, update
+from sqlalchemy import select, update, insert
 
 from src.core.database.dao import BaseDAO
-from src.core.database.models import Payment, PaymentProviderType, PaymentStatusType, Tariff, User
+from src.core.database.models import Payment, PaymentProviderType, PaymentStatusType, Tariff, User, WebhookEvent
+from src.webhook.yookassa.dto import WebhookNotificationDTO
 
 
 class YookassaDAO(BaseDAO):
@@ -28,4 +29,15 @@ class YookassaDAO(BaseDAO):
                 )
             )
             await session.execute(query)
+            await session.commit()
+
+    async def insert_webhook_event(self, notification: WebhookNotificationDTO):
+        async for session in self._db.get_session():
+            instance = WebhookEvent(
+                provider=PaymentProviderType.yookassa,
+                provider_event_id=notification.object.id,
+                event_type=notification.event,
+                payload_json=notification,
+            )
+            session.add(instance)
             await session.commit()

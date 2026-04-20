@@ -21,6 +21,8 @@ class YookassaService:
     async def process(self, notification: WebhookNotificationDTO) -> bool:
         status_event: PaymentStatusType = self.__parse_event(notification)
 
+        # TODO: exists payment and webhook event????
+
         if status_event == PaymentStatusType.succeeded:
             await self.handle_event_succeeded(payment=notification.object)
         elif status_event == PaymentStatusType.waiting_for_capture:

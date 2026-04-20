@@ -51,7 +51,7 @@ class CouponService:
             await self._tariff_service.issue_tariff(user=user, tariff=coupon.tariff)
             await message.answer(
                 f"✅ <b>Купон успешно активирован!</b>\n\n"
-                f"Тебе начислено <i>{coupon.tariff.days} дней</i> безлимитного VPN 🚀\n\n"
+                f"Тебе начислено <i>{coupon.tariff.days} дней</i> безлимитного 🚀\n\n"
                 f"Пользуйся безопасно и без ограничений 💙",
                 parse_mode="html",
                 # TODO: keyboard lk

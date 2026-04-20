@@ -11,10 +11,10 @@ START_AGAIN_MESSAGES = [
     "С возвращением! <tg-emoji emoji-id='5343984088493599366'>👋</tg-emoji>",
     "Рады видеть тебя снова <tg-emoji emoji-id='5325559344513691205'>😎</tg-emoji>",
     "Привет ещё раз <tg-emoji emoji-id='5363836475307730046'>😚</tg-emoji>",
-    "С возвращением в Приватка VPN <tg-emoji emoji-id='5188481279963715781'>🚀</tg-emoji>",
+    "С возвращением в YourApp <tg-emoji emoji-id='5188481279963715781'>🚀</tg-emoji>",
     "И снова ты — отличное решение <tg-emoji emoji-id='5388743385794228775'>😊</tg-emoji>",
-    "С любовью Приватка <tg-emoji emoji-id='5397890811436213746'>🫶</tg-emoji>",
-    "Приватка VPN снова на связи <tg-emoji emoji-id='5397890811436213746'>🫶</tg-emoji>",
+    "С любовью YourApp <tg-emoji emoji-id='5397890811436213746'>🫶</tg-emoji>",
+    "YourApp снова на связи <tg-emoji emoji-id='5397890811436213746'>🫶</tg-emoji>",
 ]
 
 
@@ -45,7 +45,7 @@ class StartService:
 
         if not await self._dao.exists_user(telegram_id=message.from_user.id):
             msg_text = (
-                f"<b>Добро пожаловать в Приватка VPN!</b>\n\n"
+                f"<b>Добро пожаловать в YourApp!</b>\n\n"
                 f"<tg-emoji emoji-id='5456140674028019486'>⚡️</tg-emoji> Быстро.\n"
                 f"<tg-emoji emoji-id='5224450179368767019'>🌎</tg-emoji> Без ограничений.\n"
                 f"<tg-emoji emoji-id='5197288647275071607'>🛡</tg-emoji> Без логов.\n\n"

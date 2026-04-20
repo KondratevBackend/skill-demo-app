@@ -44,7 +44,7 @@ class FeedbackService:
             ex=60 * 20,  # 20 min
         )
 
-        name_msg = feedback.user_name if feedback.user_name else "Покупатель Приватка-VPN"
+        name_msg = feedback.user_name if feedback.user_name else "Покупатель YourApp"
         rating_msg = feedback.rating * "<tg-emoji emoji-id='5438496463044752972'>⭐️</tg-emoji>"
         verified_msg = "<tg-emoji emoji-id='5206607081334906820'>✔️</tg-emoji>" if feedback.is_verified_user else ""
         advantages_msg = f"\n<i>Достоинства</i>: {feedback.advantages}" if feedback.advantages else ""

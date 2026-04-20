@@ -29,7 +29,7 @@ class Application:
             await self._db.shutdown()
 
         server = fastapi.FastAPI(
-            title="Приватка Webhook",
+            title="YourApp Webhook",
             version="1.0.0",
             lifespan=lifespan,
             root_path="/webhook",
